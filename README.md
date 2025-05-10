@@ -74,7 +74,9 @@ Answer here: (delete this prompt)
 ## Metadata
 
 Git Commit ID for end of Part 3.2:
+- At some point I had 2 as6-journal-laurxnt because I was having A LOT of issues with xcode.. praying that this one that I commited is the one where I had all the journal mockups in... if not.. I SWEAR I DID IT! I just don't know if I commited/pushed the wrong one :') (gitlab shows its the correct one... so i'm hoping my dumb mistake did not ruin this portion lol)
 - d6119af8
+
 
 ## Code comprehension questions
 
@@ -98,8 +100,14 @@ What capabilities does the ensemble of `Journal`, `JournalEntry`, and `Sequentia
 ### `JournalProvider`
 
 How else could we have implemented `JournalProvider` and `Journal` to give the same consistency guarantees as we have but without the proxy and clone structure we implemented here? What are the pros/cons of this way vs. what you come up with?
+- Another way to set up JournalProvider and Journal without using a proxy or clone is to make the journal something you can not change directly and replace it completely whenever someone updates the journal. 
+- Pros:
+  - Easier to track when changes happen since we always need to replace the whole thing
+  - Works well with Provider and other management tools
+- Cons:
+  - Less efficient, has to build the entire journal over and over again rather than one element
+  - Less convenient
 
-Answer here: (delete this prompt)
 
 ### Robustness
 

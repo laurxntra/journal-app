@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:journal/views/entry_view.dart';
 import 'package:journal/models/journal_entry.dart';
 import 'package:intl/intl.dart';
+import 'package:journal/providers/journal_provider.dart';
+import 'package:provider/provider.dart';
 
 class AllEntriesView extends StatelessWidget {
   const AllEntriesView({super.key});
@@ -10,44 +12,53 @@ class AllEntriesView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // TODO(optional): Change this title if you want
-        title: const Text('All Journal Entries'),
-        // TODO(required): Add use of actions parameter here to make a button for adding a new entry. 
+        title: const Text('All Workout Entries'),
       ),
-      body: const Column(
-        children: <Widget>[
-          Expanded(
-            // TODO(required): Use ListView.builder to create and show a scrollable view of all JournalEntries
-            // TODO(required): Put a Consumer here, and make it's builder call ListView.builder. 
-            //  Once you do that, you should remove all references to the journal field that holds mock data
-            child: Placeholder()
-          )
-        ],
+      body: Consumer<JournalProvider>(
+        builder: (context, journalProvider, child) {
+          final entries = journalProvider.entries;
+
+          if (entries.isEmpty) {
+            return const Center(
+              child: Text('No workout entries yet.'),
+            );
+          }
+
+          return ListView.builder(
+            itemCount: entries.length,
+            itemBuilder: (context, index) =>
+              _createListElementForEntry(context, entries[index]),
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _navigateToEntry(context, JournalEntry.empty()),
+        child: const Icon(Icons.add),
       ),
     );
   }
 
-  // TODO(required): define _createListElementForEntry
-
+  Widget _createListElementForEntry(BuildContext context, JournalEntry entry) {
+    return ListTile(
+      title: Text(entry.title.isNotEmpty ? entry.title : 'Untitled Entry'),
+      subtitle: Text(_formatDateTime(entry.updatedAt)),
+      onTap: () => _navigateToEntry(context, entry),
+    );
+  }
 
   Future<void> _navigateToEntry(BuildContext context, JournalEntry entry) async {
     final newEntry = await Navigator.push(
-      context, 
-      MaterialPageRoute(builder: (context) => EntryView(entry: entry))
+      context,
+      MaterialPageRoute(builder: (context) => EntryView(entry: entry)),
     );
 
-    if (!context.mounted) return; // TODO(required): Add comment here explaining when/why this would be true
+    if (!context.mounted || newEntry == null) return;
 
-    // TODO(required): Get non-listening reference to JournalProvider
-    // TODO(required): Call provider's upsert method with entry
-
+    final journalProvider = Provider.of<JournalProvider>(context, listen: false);
+    journalProvider.upsertJournalEntry(newEntry);
   }
 
-  _formatDateTime(DateTime when){
-    // TODO(optional): Change this format if you want. 
-    //  Remove this `TODO` if you don't want to do it.
-    //  Explain your changes in README if you do change.
+  String _formatDateTime(DateTime when) {
     return DateFormat.yMd().add_jm().format(when);
   }
-
 }

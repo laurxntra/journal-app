@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:journal/util/journal_mocker.dart';
 import 'package:journal/views/all_entries_view.dart';
+import 'package:journal/models/journal.dart';
 
 void main() {
-  // TODO(required): Need to ensure that all of the Flutter Widgets are initialized
+  // ensure that all of the Flutter Widgets are initialized 
   // and have a binding before calling runApp
+  WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(const MainApp());
+  final mockJournal = makeMockJournal();
+
+  runApp(MainApp(journal: mockJournal));
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  final Journal journal;
+
+  const MainApp({super.key, required this.journal});
 
   // This widget is the root of your application.
   @override
@@ -21,7 +28,7 @@ class MainApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.brown),
         useMaterial3: true,
       ),
-      home: const AllEntriesView(),
+      home: AllEntriesView(),
     );
   }
 }

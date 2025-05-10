@@ -1,11 +1,11 @@
 # Journal
 
 ## Student Information
-Name:
+Name: Lauren Tra
 
-CSE netid:
+CSE netid: laurxnt
 
-email:
+email: laurxnt@uw.edu
 
 ## Resources Used
 Cite anything (website or other resource) or anyone that assisted you in creating your solution to this assignment.
@@ -18,7 +18,14 @@ Remember to include all resources you used to solve this assignment.
 
 If you did not use any resources beyond classroom/flutter docs, please state so explicitly.
 
-Answer here: (delete this prompt)
+- https://api.flutter.dev/flutter/widgets/PopScope-class.html
+- https://api.flutter.dev/flutter/material/AppBar-class.html
+- https://stackoverflow.com/questions/71480865/xcode-failed-to-register-bundle-identifier
+
+I had a lot of issues with my XCode from AS5 and currently.. these websites helped me debug what was going on :')
+- https://stackoverflow.com/questions/4770751/xcode-organizer-can-not-use-iphone-dyld-shared-cache-extract-dylibs-failed
+- https://stackoverflow.com/questions/62487008/xcode-stuck-on-copying-cache-files-from-device-tvos
+- 
 
 ## Design Vision
 
@@ -51,16 +58,19 @@ Answer here: (delete this prompt)
 ### `JournalEntry`
 
 The `JournalEntry` starter code includes three constructors. Explain how these three constructors fit together, and what their holistic purpose is as a set.
-
-Answer here: (delete this prompt)
+- These constructors work hand in hand by handling data. It allows users to have a blank journal entry, as well as allowing for manual entry for when they create, as well as modification and preserving the previous data that was jotted down.
 
 When you create the `entries` getter in `Journal`, why is copying the list alone sufficient? i.e. why don't we need to do a deep copy, i.e. making a new list with copies of all the `JournalEntry` elements?
-
-Answer here: (delete this prompt)
+- Copying the list alone is sufficient because the JournalEntry objects are final, so once the entry is created it can not be changed, but can be edited by creating a new instance and updating the values using upsertEntry()
 
 What capabilities does the ensemble of `Journal`, `JournalEntry`, and `SequentialIDMaker` give us? If we wanted to (from the user's point of view) edit a `JournalEntry`, how can we do that with these classes, even though `JournalEntry` is immutable? Have you seen this pattern before or is it new to you?
+- JournalEntry gives us a single entry with a unique ID, exercise name, sets, reps, etc.
+- Journal allows us to store multiple JournalEntryies, it uses _entries list to manage any edits or additions to the journal entry
+- SequentialIDMaker automatically assigns ids, allowing each entry to be unique and easier to manage.
 
-Answer here: (delete this prompt)
+- Since JournalEntry fields are final, we can not modify directly, so what we're doing is creating a new JournalEntry instance with the modified values by using upsertEntry(), we are replacing the old entry with the new one with the same id, just different data. 
+
+- I have seen this pattern before in my previous data classes that I have taken at UW.
 
 ### `JournalProvider`
 

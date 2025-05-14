@@ -61,6 +61,8 @@ I had a lot of issues with my XCode from AS5 and currently.. these websites help
 - https://discussions.apple.com/thread/255530174
 - https://www.figma.com/resource-library/color-combinations/
 - https://mypersonaltrainerwebsite.com/blog/how-to-use-color-psychology-to-create-the-perfect-fitness-website
+- https://dart.dev/language/functions
+
 
 
 - All other resources are from lecture/section

@@ -13,6 +13,12 @@ class AllEntriesView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('All Workout Entries'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () => _navigateToEntry(context, JournalEntry.empty()),
+          ),
+        ],
       ),
       body: Consumer<JournalProvider>(
         builder: (context, journalProvider, child) {
@@ -27,7 +33,7 @@ class AllEntriesView extends StatelessWidget {
           return ListView.builder(
             itemCount: entries.length,
             itemBuilder: (context, index) =>
-              _createListElementForEntry(context, entries[index]),
+                _createListElementForEntry(context, entries[index]),
           );
         },
       ),
@@ -45,7 +51,6 @@ class AllEntriesView extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
-
           border: Border.all(
             color: Colors.white,
             width: 1.5,
@@ -54,16 +59,16 @@ class AllEntriesView extends StatelessWidget {
             BoxShadow(
               color: Colors.black,
               blurRadius: 4,
-              offset: Offset(0, 2)
-            )
+              offset: Offset(0, 2),
+            ),
           ],
         ),
         child: ListTile(
-         title: Text(entry.title.isNotEmpty ? entry.title : 'Untitled Entry'),
-         subtitle: Text(_formatDateTime(entry.updatedAt)),
+          title: Text(entry.title.isNotEmpty ? entry.title : 'Untitled Entry'),
+          subtitle: Text(_formatDateTime(entry.updatedAt)),
           onTap: () => _navigateToEntry(context, entry),
         ),
-      )
+      ),
     );
   }
 
@@ -76,7 +81,7 @@ class AllEntriesView extends StatelessWidget {
     if (!context.mounted || newEntry == null) return;
 
     final journalProvider = Provider.of<JournalProvider>(context, listen: false);
-    journalProvider.upsertJournalEntry(newEntry);
+    await journalProvider.upsertJournalEntry(newEntry);
   }
 
   String _formatDateTime(DateTime when) {

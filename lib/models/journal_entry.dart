@@ -31,6 +31,7 @@ class JournalEntry {
   // Amount of weight used in lbs
   int weight;
 
+
   // Factory constructor to create a new journal entry with default values. Automatically
   // assigns a unique id and sets time stamps
   factory JournalEntry.fromText({

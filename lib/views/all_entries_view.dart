@@ -51,39 +51,39 @@ class AllEntriesView extends StatelessWidget {
     );
   }
 
-Widget _createListElementForEntry(BuildContext context, JournalEntry entry) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-    child: Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
+  Widget _createListElementForEntry(BuildContext context, JournalEntry entry) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Container(
+        decoration: BoxDecoration(
           color: Colors.white,
-          width: 1.5,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black,
-            blurRadius: 4,
-            offset: Offset(0, 2),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: Colors.white,
+            width: 1.5,
           ),
-        ],
-      ),
-      child: Semantics(
-        label: 'Workout Entry: ${entry.title.isNotEmpty ? entry.title 
-          : 'Untitled Entry'}, Last updated on ${_formatDateTime(entry.updatedAt)}',
-        child: ListTile(
-          title: Text(entry.title.isNotEmpty ? entry.title : 'Untitled Entry'),
-          subtitle: Text(_formatDateTime(entry.updatedAt)),
-          onTap: () {
-            _navigateToEntry(context, entry);
-          },
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black,
+              blurRadius: 4,
+              offset: Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Semantics(
+          label: 'Workout Entry: ${entry.title.isNotEmpty ? entry.title 
+            : 'Untitled Entry'}, Last updated on ${_formatDateTime(entry.updatedAt)}',
+          child: ListTile(
+            title: Text(entry.title.isNotEmpty ? entry.title : 'Untitled Entry'),
+            subtitle: Text(_formatDateTime(entry.updatedAt)),
+            onTap: () {
+              _navigateToEntry(context, entry); // Trigger navigation to the entry view
+            },
+          ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 
   Future<void> _navigateToEntry(BuildContext context, JournalEntry entry) async {
     final newEntry = await Navigator.push(
@@ -91,10 +91,11 @@ Widget _createListElementForEntry(BuildContext context, JournalEntry entry) {
       MaterialPageRoute(builder: (context) => EntryView(entry: entry)),
     );
 
-    if (!context.mounted || newEntry == null) return;
-
-    final journalProvider = Provider.of<JournalProvider>(context, listen: false);
-    await journalProvider.upsertJournalEntry(newEntry);
+    // Ensure the newEntry is not null before attempting to upsert it
+    if (newEntry != null) {
+      final journalProvider = Provider.of<JournalProvider>(context, listen: false);
+      await journalProvider.upsertJournalEntry(newEntry);
+    }
   }
 
   String _formatDateTime(DateTime when) {

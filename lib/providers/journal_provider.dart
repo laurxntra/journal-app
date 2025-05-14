@@ -33,6 +33,7 @@ class JournalProvider extends ChangeNotifier {
 
   Future<void> upsertJournalEntry(JournalEntry entry) async {
     await _journal.upsertEntry(entry);
+    await loadEntries();
     notifyListeners();
   }
 }

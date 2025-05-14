@@ -32,8 +32,9 @@ class AllEntriesView extends StatelessWidget {
 
           return ListView.builder(
             itemCount: entries.length,
-            itemBuilder: (context, index) =>
-                _createListElementForEntry(context, entries[index]),
+            itemBuilder: (context, index) {
+              return _createListElementForEntry(context, entries[index]);
+            },
           );
         },
       ),
@@ -44,31 +45,29 @@ class AllEntriesView extends StatelessWidget {
     );
   }
 
-Widget _createListElementForEntry(BuildContext context, JournalEntry entry) {
+  Widget _createListElementForEntry(BuildContext context, JournalEntry entry) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-    child: GestureDetector(
-      onTap: () => _navigateToEntry(context, entry),
-      child: Container(
-        decoration: BoxDecoration(
+    child: Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(
-            color: Colors.white,
-            width: 1.5,
+          width: 1.5,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black,
+            blurRadius: 4,
+            offset: Offset(0, 2),
           ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black,
-              blurRadius: 4,
-              offset: Offset(0, 2),
-            ),
-          ],
-        ),
-        child: ListTile(
-          title: Text(entry.title.isNotEmpty ? entry.title : 'Untitled Entry'),
-          subtitle: Text(_formatDateTime(entry.updatedAt)),
-        ),
+        ],
+      ),
+      child: ListTile(
+        title: Text(entry.title.isNotEmpty ? entry.title : 'Untitled Entry'),
+        subtitle: Text(_formatDateTime(entry.updatedAt)),
+        onTap: () => _navigateToEntry(context, entry),
       ),
     ),
   );

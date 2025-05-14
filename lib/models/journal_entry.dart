@@ -2,9 +2,9 @@ import 'package:isar/isar.dart';
 part 'journal_entry.g.dart';
 
 @collection
-// Represents a single journey entry with a unique id, text, and time stamps
+// Represents a single journal entry with a unique id, text, and time stamps
 class JournalEntry {
-  // Unique id for the journal entry
+  // Unique id for the journal entry (managed by Isar)
   Id? id;
 
   // Text for the content of the journal entry (exercise name)
@@ -22,7 +22,7 @@ class JournalEntry {
   // Number of sets performed in the workout session
   int sets;
 
-  // Number of repetitions per set 
+  // Number of repetitions per set
   int reps;
 
   // Duration of the workout in minutes (for runners)
@@ -32,7 +32,7 @@ class JournalEntry {
   int weight;
 
   // Factory constructor to create a new journal entry with default values. Automatically
-  // assigns a unique id and set time stamps
+  // assigns a unique id and sets time stamps
   factory JournalEntry.fromText({
       String workoutName = '',
       String title = '',
@@ -54,8 +54,8 @@ class JournalEntry {
   }
 
   // Constructor for creating a journal entry with specific values
-  JournalEntry(
-      {required this.workoutName,
+  JournalEntry({
+      required this.workoutName,
       this.id,
       required this.updatedAt,
       required this.createdAt,
@@ -63,12 +63,14 @@ class JournalEntry {
       this.sets = 0,
       this.reps = 0,
       this.duration = 0,
-      this.weight = 0});
+      this.weight = 0
+  });
 
+  // Factory constructor for an empty journal entry
   factory JournalEntry.empty() {
     final now = DateTime.now();
     return JournalEntry(
-      workoutName: '',
+      workoutName: 'Untitled Workout',
       title: 'Untitled Entry',
       sets: 0,
       reps: 0,
@@ -81,11 +83,11 @@ class JournalEntry {
 
   // Constructor to create a new entry from an existing one with an updated text
   // Keeps the original entry's Id and timestamp but updates the modified time
-  JournalEntry.withUpdatedText(JournalEntry entry, newText)
+  JournalEntry.withUpdatedText(JournalEntry entry, String newText)
       : id = entry.id,
         createdAt = entry.createdAt,
         updatedAt = DateTime.now(),
-        workoutName = entry.workoutName,
+        workoutName = newText,
         title = entry.title,
         sets = entry.sets,
         reps = entry.reps,

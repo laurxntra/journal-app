@@ -22,7 +22,7 @@ class _EntryViewState extends State<EntryView>{
   @override
   void initState() {
     super.initState();
-    currentText = widget.entry.workoutName;
+    currentText = widget.entry.workoutName.isNotEmpty ? widget.entry.workoutName : 'Untitled Workout';
     currentSets = widget.entry.sets;
     currentReps = widget.entry.reps;
     currentWeight = widget.entry.weight;
@@ -53,15 +53,38 @@ class _EntryViewState extends State<EntryView>{
               TextFormField(
                 initialValue: currentTitle,
                 onChanged: (newTitle) => setState(() => currentTitle = newTitle),
-                decoration: const InputDecoration(labelText: 'Workout Title'),
+                decoration: InputDecoration(
+                  labelText: 'Workout Title',
+                  hintText: 'e.g. Leg Day',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: const BorderSide(color: Colors.blue)
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                  contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+
+                  ),
               ),
               const SizedBox(height: 16,),
 
               // Workout name text field
               TextFormField(
+                
                 initialValue: currentText,
                 onChanged: (newText) => setState(() => currentText = newText),
-                decoration: const InputDecoration(labelText: 'Workout Name'),
+                decoration: InputDecoration(
+                  labelText: 'Workout Name',
+                  hintText: 'e.g. Leg Press',
+                  floatingLabelBehavior: FloatingLabelBehavior.auto,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                  contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+
+                  ),
               ),
               const SizedBox(height: 16,),
             
@@ -70,7 +93,16 @@ class _EntryViewState extends State<EntryView>{
                 initialValue: currentSets.toString(),
                 keyboardType: TextInputType.number,
                 onChanged: (newSet) => setState(() => currentSets = int.tryParse(newSet) ?? currentSets),
-                decoration: const InputDecoration(labelText: 'Amount of sets'),
+                decoration: InputDecoration(
+                  labelText: 'Amount of sets',
+                  hintText: 'e.g. 5 sets',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                  contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                  ),
               ),
               const SizedBox(height: 16,),
             
@@ -79,7 +111,16 @@ class _EntryViewState extends State<EntryView>{
                 initialValue: currentReps.toString(),
                 keyboardType: TextInputType.number,
                 onChanged: (newRep) => setState(() => currentReps = int.tryParse(newRep) ?? currentReps),
-                decoration: const InputDecoration(labelText: 'Amount of repetitions'),
+                decoration: InputDecoration(
+                  labelText: 'Amount of repetitions',
+                  hintText: 'e.g. 30 repetitions',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                  contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                  ),
               ),
               const SizedBox(height: 16,),
             
@@ -88,7 +129,16 @@ class _EntryViewState extends State<EntryView>{
                 initialValue: currentWeight.toString(),
                 keyboardType: TextInputType.number,
                 onChanged: (newWeight) => setState(() => currentWeight = int.tryParse(newWeight) ?? currentWeight),
-                decoration: const InputDecoration(labelText: 'Amount of weight'),
+                decoration: InputDecoration(
+                  labelText: 'Amount of weight',
+                  hintText: 'e.g. 120 lbs',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                  contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                  ),
               ),
               const SizedBox(height: 16,),
 
@@ -97,13 +147,36 @@ class _EntryViewState extends State<EntryView>{
                 initialValue: currentDura.toString(),
                 keyboardType: TextInputType.number,
                 onChanged: (newDura) => setState(() => currentDura = int.tryParse(newDura) ?? currentDura),
-                decoration: const InputDecoration(labelText: 'Duration of workout'),
+                decoration: InputDecoration(
+                  labelText: 'Duration of workout (in minutes)',
+                  hintText: 'e.g. 120 minutes',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                  contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                  ),
               ),
               const SizedBox(height: 16,),
             
               ElevatedButton(
                 onPressed: () => _popBack(context),
-                child: const Text('Save'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromRGBO(128, 178, 213, 1),
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 24),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: const Text(
+                  'Save',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  )
+                )
               )
             ],
           ),

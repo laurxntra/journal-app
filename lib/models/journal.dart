@@ -40,6 +40,6 @@ class Journal {
 
   // Creates a copy of the journal, including all the fields provided from the entries
    Journal clone() {
-    return Journal(isar: _isar, name: name).._entries = List.from(_entries);
+    return Journal(isar: _isar, name: name);
   }
 }

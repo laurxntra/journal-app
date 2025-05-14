@@ -38,6 +38,17 @@ What I asked ChatGPT:
   )
   - This was actually incredibly helpful, I did both because Scaffold does not automatically shift content unless it is scrollable (which, I totally forgot to do), and allowing the layout to be resized for the bottom portion
 
+- What is a good color scheme to use for a workout journal tracker?
+  - For a workout journal tracker, you want a color scheme that feels motivating and energetic, yet easy on the eyes for reading and reflecting. Here’s a good approach:
+
+  Primary Colors:
+
+  Energetic and Vibrant (Accent colors): Consider using shades of orange, red, or yellow to invoke energy and motivation. These colors are often associated with physical activity and enthusiasm.
+
+  Calming and Focused (Background colors): Use light gray, soft blues, or light greens for the background or general page areas. These colors are calming and easy on the eyes, which helps keep users focused.
+
+- This was not very helpful, I ended up looking up on google for better design colors, link is provided to the website for reference below
+
 
 
 - https://api.flutter.dev/flutter/widgets/PopScope-class.html
@@ -48,6 +59,9 @@ I had a lot of issues with my XCode from AS5 and currently.. these websites help
 - https://stackoverflow.com/questions/4770751/xcode-organizer-can-not-use-iphone-dyld-shared-cache-extract-dylibs-failed
 - https://stackoverflow.com/questions/62487008/xcode-stuck-on-copying-cache-files-from-device-tvos
 - https://discussions.apple.com/thread/255530174
+- https://www.figma.com/resource-library/color-combinations/
+- https://mypersonaltrainerwebsite.com/blog/how-to-use-color-psychology-to-create-the-perfect-fitness-website
+
 
 - All other resources are from lecture/section
 
@@ -112,16 +126,19 @@ How else could we have implemented `JournalProvider` and `Journal` to give the s
 ### Robustness
 
 What could go wrong when running the app prior to adding persistent data using the `Isar` system? 
+- When running the app prior to adding persistent data using the Isar system, data could be lost during restart. Since there is no persistent storage, any of the user entered data can be lost when the app is closed/restarted during this process.
 
-Answer here: (delete this prompt)
 
 What could go wrong with your app after adding the journal persistence? For example, given how we have implemented the persistence, what are the circumstances under which a user could lose their journal data? What are the circumstances where someone else could gain access to their data? What other issues can you think of that could be problematic? 
-
-Answer here: (delete this prompt)
+- A circumstand which users could lose their journal data is possibly by uninstalling the app. This would delete all the stored workout journal entries. 
+- If someone's device was stolen they could possibly extract those data files from the user's workout journal (not really sure why anyone would want that though unless they are gatekeeping their workout ;p, but in other more~ important cases!! Their data would not be secure unless there is additional security on the app)
+- If a user puts down too many journal entries or uses it frequently, the speed of the reloading the exercises could slow down the app
+ 
 
 What could you do to change the design and implementation of your app to mitigate these risk?
-
-Answer here: (delete this prompt)
+- Have automatic backups stored of the journal entries
+- Have secure login/passwords similar to a social media account
+- Avoid loading all data at once, do a limited amount (kind of like a book, go to the next page to view the other entries)
 
 
 ## Reflection Prompts
@@ -150,9 +167,9 @@ Answer here: (delete this prompt)
 ### Meta
 
 How much time (in minutes or hours of active work) did you spend working on this assignment? What parts took the longest?
+- I would say roughly 48-36 hours (on and off). It took roughly 3-4 days, but I did not really count the hours, worked on the assignment.
+- I want to say what took the longest was making the aesthetic exactly what I wanted. A lot of trial and error occurred as to how I wanted the app to look like. (A lot of debugging had to happen with my xcode too so that took forever).
 
-Answer here: (delete this prompt)
 
 How could the assignment be improved for future offerings of this class?
-
-Answer here: (delete this prompt)
+- I think this was a well structured assignment, so I can not really think of any improvements that this one needs

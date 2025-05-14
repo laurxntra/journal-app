@@ -56,11 +56,11 @@ class JournalEntry {
 
   // Constructor for creating a journal entry with specific values
   JournalEntry({
-      required this.workoutName,
+      this.workoutName = 'Untitled Workout',
       this.id,
       required this.updatedAt,
       required this.createdAt,
-      required this.title,
+      this.title = 'Untitled Entry',
       this.sets = 0,
       this.reps = 0,
       this.duration = 0,

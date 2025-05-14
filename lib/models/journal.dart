@@ -13,10 +13,11 @@ class Journal {
   // Default constructor to initialize the journal with a name and entry list
   Journal({required Isar isar, this.name = 'My work and Jot'})
     : _isar = isar,
-    _entries = [] {
-      _entries = _isar.journalEntrys.where().findAllSync();
-    }
+    _entries = [];
 
+  Future<void> loadEntries() async {
+    _entries = await _isar.journalEntrys.where().findAll();
+  }
   // Returns a copy of the entries list
   List<JournalEntry> get entries => List.from(_entries);
 

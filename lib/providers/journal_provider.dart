@@ -8,6 +8,7 @@ import 'package:isar/isar.dart';
 class JournalProvider extends ChangeNotifier {
   final Journal _journal;
   final Isar _isar;
+  bool _isLoading = false;
 
   JournalProvider(this._journal, this._isar);
   
@@ -16,6 +17,17 @@ class JournalProvider extends ChangeNotifier {
 
   // Returns a clone of the journal to prevent direct modifications
   Journal get journal => _journal.clone();
+  bool get isLoading => _isLoading;
+
+  Future<void> loadEntries() async {
+    _isLoading = true;
+    notifyListeners();
+
+    await _journal.loadEntries();
+
+    _isLoading = false;
+    notifyListeners();
+  }
 
   // Calls upsertEntry to make sure listeners are notified of any changes
   void upsertJournalEntry(JournalEntry entry) async {

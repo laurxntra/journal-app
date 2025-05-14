@@ -20,6 +20,9 @@ Future<void> main() async {
 
   final journal = Journal(isar: isar);
 
+  final journalProvider = JournalProvider(journal, isar);
+  await journalProvider.loadEntries();
+
 
   runApp(
     ChangeNotifierProvider(

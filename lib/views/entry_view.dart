@@ -41,7 +41,11 @@ class _EntryViewState extends State<EntryView> {
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
-          title: Text(currentTitle.isNotEmpty ? currentTitle : ''),
+          title: Semantics(
+            header: true,
+            child: Text(currentTitle.isNotEmpty ? currentTitle : ''),
+
+          )
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16),

@@ -12,7 +12,9 @@ class AllEntriesView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('All Workout Entries'),
+        title: Semantics(
+          child: const Text('All Workout Entries'),
+        ),
         actions: [
           Semantics(
             label: 'Add a new workout entry',
@@ -71,16 +73,17 @@ class AllEntriesView extends StatelessWidget {
           ],
         ),
         child: Semantics(
-          label: 'Workout Entry: ${entry.title.isNotEmpty ? entry.title 
-            : 'Untitled Entry'}, Last updated on ${_formatDateTime(entry.updatedAt)}',
+          label: 'Workout Entry: ${entry.title.isNotEmpty ? entry.title : 'Untitled Entry'}, Last updated on ${_formatDateTime(entry.updatedAt)}',
+          button: true,
           child: ListTile(
             title: Text(entry.title.isNotEmpty ? entry.title : 'Untitled Entry'),
             subtitle: Text(_formatDateTime(entry.updatedAt)),
             onTap: () {
-              _navigateToEntry(context, entry); // Trigger navigation to the entry view
+              _navigateToEntry(context, entry);
             },
           ),
         ),
+
       ),
     );
   }

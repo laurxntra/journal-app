@@ -44,9 +44,11 @@ class AllEntriesView extends StatelessWidget {
     );
   }
 
-  Widget _createListElementForEntry(BuildContext context, JournalEntry entry) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+Widget _createListElementForEntry(BuildContext context, JournalEntry entry) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    child: GestureDetector(
+      onTap: () => _navigateToEntry(context, entry),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -66,11 +68,12 @@ class AllEntriesView extends StatelessWidget {
         child: ListTile(
           title: Text(entry.title.isNotEmpty ? entry.title : 'Untitled Entry'),
           subtitle: Text(_formatDateTime(entry.updatedAt)),
-          onTap: () => _navigateToEntry(context, entry),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
+
 
   Future<void> _navigateToEntry(BuildContext context, JournalEntry entry) async {
     final newEntry = await Navigator.push(

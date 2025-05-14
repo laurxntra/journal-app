@@ -6,16 +6,15 @@ import 'package:isar/isar.dart';
 // Manages the Journal and provides updates to the app
 class JournalProvider extends ChangeNotifier {
   final Journal _journal;
-  final Isar _isar;
   bool _isLoading = false;
 
   // Private constructor used internally
-  JournalProvider._(this._journal, this._isar);
+  JournalProvider._(this._journal);
 
   // Single factory constructor that both tests and app will use
   factory JournalProvider(Isar isar) {
     final journal = Journal(isar: isar);
-    return JournalProvider._(journal, isar);
+    return JournalProvider._(journal);
   }
 
   List<JournalEntry> get entries => List.unmodifiable(_journal.entries);

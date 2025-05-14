@@ -1,22 +1,31 @@
 import 'package:journal/models/journal_entry.dart';
+import 'package:isar/isar.dart';
 
 // Represents a collection of journal entries
 class Journal {
+  final Isar _isar;
   // name of journal
   final String name;
 
   // list of workout entries
-  final List<JournalEntry> _entries;
+  List<JournalEntry> _entries;
 
   // Default constructor to initialize the journal with a name and entry list
-  Journal({this.name = 'My Work and Jot', List<JournalEntry>? entries})
-    : _entries = entries ?? [];
+  Journal({required Isar isar, this.name = 'My work and Jot'})
+    : _isar = isar,
+    _entries = [] {
+      _entries = _isar.journalEntrys.where().findAllSync();
+    }
 
   // Returns a copy of the entries list
   List<JournalEntry> get entries => List.from(_entries);
 
   // Inserts a new entry/updates an existing one based on id
-  void upsertEntry(JournalEntry entry) {
+  Future<void> upsertEntry(JournalEntry entry) async {
+    await _isar.writeTxn(() async {
+      await _isar.journalEntrys.put(entry);
+    });
+
     // Finds the index of the entry with the matching id
     final int index = _entries.indexWhere((e) => e.id == entry.id);
     
@@ -31,6 +40,6 @@ class Journal {
 
   // Creates a copy of the journal, including all the fields provided from the entries
    Journal clone() {
-    return Journal(name: name, entries: List.from(_entries));
+    return Journal(isar: _isar, name: name).._entries = List.from(_entries);
   }
 }

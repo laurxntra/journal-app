@@ -1,31 +1,35 @@
+import 'package:isar/isar.dart';
+part 'journal_entry.g.dart';
+
+@collection
 // Represents a single journey entry with a unique id, text, and time stamps
 class JournalEntry {
   // Unique id for the journal entry
-  final int id;
+  Id? id;
 
   // Text for the content of the journal entry (exercise name)
-  final String workoutName;
+  late String workoutName;
 
   // Timestamp that indicates when the last entry was edited
-  final DateTime updatedAt;
+  late DateTime updatedAt;
 
   // Timestamp that indicates when the entry was first made
-  final DateTime createdAt;
+  late DateTime createdAt;
 
   // Title for the journal entry
-  final String title;
+  late String title;
 
   // Number of sets performed in the workout session
-  final int sets;
+  int sets;
 
   // Number of repetitions per set 
-  final int reps;
+  int reps;
 
   // Duration of the workout in minutes (for runners)
-  final int duration;
+  int duration;
 
   // Amount of weight used in lbs
-  final int weight;
+  int weight;
 
   // Factory constructor to create a new journal entry with default values. Automatically
   // assigns a unique id and set time stamps
@@ -37,7 +41,7 @@ class JournalEntry {
       int duration = 0,
       int weight = 0,
     }) {
-    final when = DateTime.now();
+    final now = DateTime.now();
     return JournalEntry(
         workoutName: workoutName,
         title: title,
@@ -45,15 +49,14 @@ class JournalEntry {
         reps: reps,
         duration: duration,
         weight: weight,
-        id: SequentialIDMaker.nextID(),
-        updatedAt: when,
-        createdAt: when);
+        updatedAt: now,
+        createdAt: now);
   }
 
   // Constructor for creating a journal entry with specific values
   JournalEntry(
       {required this.workoutName,
-      required this.id,
+      this.id,
       required this.updatedAt,
       required this.createdAt,
       required this.title,
@@ -63,6 +66,7 @@ class JournalEntry {
       this.weight = 0});
 
   factory JournalEntry.empty() {
+    final now = DateTime.now();
     return JournalEntry(
       workoutName: '',
       title: 'Untitled Entry',
@@ -70,9 +74,8 @@ class JournalEntry {
       reps: 0,
       duration: 0,
       weight: 0,
-      id: SequentialIDMaker.nextID(),
-      updatedAt: DateTime.now(),
-      createdAt: DateTime.now(),
+      updatedAt: now,
+      createdAt: now,
     );
   }
 
@@ -88,14 +91,4 @@ class JournalEntry {
         reps = entry.reps,
         duration = entry.duration,
         weight = entry.weight;
-}
-
-// Generates the unique id for the journal entries, increases the number
-// so there is a new unique id for the next entry
-class SequentialIDMaker {
-  static int _lastID = 0;
-  static int nextID() {
-    _lastID += 1;
-    return _lastID;
-  }
 }

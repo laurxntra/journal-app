@@ -14,9 +14,12 @@ class AllEntriesView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('All Workout Entries'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () => _navigateToEntry(context, JournalEntry.empty()),
+          Semantics(
+            label: 'Add a new workout entry',
+            child: IconButton(
+              icon: const Icon(Icons.add),
+              onPressed: () => _navigateToEntry(context, JournalEntry.empty()),
+            ),
           ),
         ],
       ),
@@ -38,14 +41,17 @@ class AllEntriesView extends StatelessWidget {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _navigateToEntry(context, JournalEntry.empty()),
-        child: const Icon(Icons.add),
+      floatingActionButton: Semantics(
+        label: 'Add a new workout entry',
+        child: FloatingActionButton(
+          onPressed: () => _navigateToEntry(context, JournalEntry.empty()),
+          child: const Icon(Icons.add),
+        ),
       ),
     );
   }
 
-  Widget _createListElementForEntry(BuildContext context, JournalEntry entry) {
+Widget _createListElementForEntry(BuildContext context, JournalEntry entry) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
     child: Container(
@@ -64,15 +70,20 @@ class AllEntriesView extends StatelessWidget {
           ),
         ],
       ),
-      child: ListTile(
-        title: Text(entry.title.isNotEmpty ? entry.title : 'Untitled Entry'),
-        subtitle: Text(_formatDateTime(entry.updatedAt)),
-        onTap: () => _navigateToEntry(context, entry),
+      child: Semantics(
+        label: 'Workout Entry: ${entry.title.isNotEmpty ? entry.title 
+          : 'Untitled Entry'}, Last updated on ${_formatDateTime(entry.updatedAt)}',
+        child: ListTile(
+          title: Text(entry.title.isNotEmpty ? entry.title : 'Untitled Entry'),
+          subtitle: Text(_formatDateTime(entry.updatedAt)),
+          onTap: () {
+            _navigateToEntry(context, entry);
+          },
+        ),
       ),
     ),
   );
 }
-
 
   Future<void> _navigateToEntry(BuildContext context, JournalEntry entry) async {
     final newEntry = await Navigator.push(

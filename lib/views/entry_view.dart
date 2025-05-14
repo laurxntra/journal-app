@@ -10,8 +10,7 @@ class EntryView extends StatefulWidget {
   State<EntryView> createState() => _EntryViewState();
 }
 
-class _EntryViewState extends State<EntryView>{
-
+class _EntryViewState extends State<EntryView> {
   late String currentText;
   late int currentSets;
   late int currentReps;
@@ -50,133 +49,153 @@ class _EntryViewState extends State<EntryView>{
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Title of the workout 
-              TextFormField(
-                initialValue: currentTitle,
-                onChanged: (newTitle) => setState(() => currentTitle = newTitle),
-                decoration: InputDecoration(
-                  labelText: 'Workout Title',
-                  hintText: 'e.g. Leg Day',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: Colors.blue)
+              Semantics(
+                label: 'Workout Title', 
+                child: TextFormField(
+                  initialValue: currentTitle,
+                  onChanged: (newTitle) => setState(() => currentTitle = newTitle),
+                  decoration: InputDecoration(
+                    labelText: 'Workout Title',
+                    hintText: 'e.g. Leg Day',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: Colors.blue)
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
                   ),
-                  filled: true,
-                  fillColor: Colors.white,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-
-                  ),
+                ),
               ),
               const SizedBox(height: 16,),
 
               // Workout name text field
-              TextFormField(
-                
-                initialValue: currentText,
-                onChanged: (newText) => setState(() => currentText = newText),
-                decoration: InputDecoration(
-                  labelText: 'Workout Name',
-                  hintText: 'e.g. Leg Press',
-                  floatingLabelBehavior: FloatingLabelBehavior.auto,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+              Semantics(
+                label: 'Workout Name',
+                child: TextFormField(
+                  initialValue: currentText,
+                  onChanged: (newText) => setState(() => currentText = newText),
+                  decoration: InputDecoration(
+                    labelText: 'Workout Name',
+                    hintText: 'e.g. Leg Press',
+                    floatingLabelBehavior: FloatingLabelBehavior.auto,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
                   ),
-                  filled: true,
-                  fillColor: Colors.white,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-
-                  ),
+                ),
               ),
               const SizedBox(height: 16,),
             
               // Number of sets field
-              TextFormField(
-                initialValue: currentSets.toString(),
-                keyboardType: TextInputType.number,
-                onChanged: (newSet) => setState(() => currentSets = int.tryParse(newSet) ?? currentSets),
-                decoration: InputDecoration(
-                  labelText: 'Amount of sets',
-                  hintText: 'e.g. 5 sets',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+              Semantics(
+                label: 'Amount of sets', 
+                child: TextFormField(
+                  initialValue: currentSets.toString(),
+                  keyboardType: TextInputType.number,
+                  onChanged: (newSet) => setState(() => currentSets = int.tryParse(newSet) ?? currentSets),
+                  decoration: InputDecoration(
+                    labelText: 'Amount of sets',
+                    hintText: 'e.g. 5 sets',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
                   ),
-                  filled: true,
-                  fillColor: Colors.white,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-                  ),
+                ),
               ),
               const SizedBox(height: 16,),
             
               // Number of reps field
-              TextFormField(
-                initialValue: currentReps.toString(),
-                keyboardType: TextInputType.number,
-                onChanged: (newRep) => setState(() => currentReps = int.tryParse(newRep) ?? currentReps),
-                decoration: InputDecoration(
-                  labelText: 'Amount of repetitions',
-                  hintText: 'e.g. 30 repetitions',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+              Semantics(
+                label: 'Amount of repetitions', 
+                child: TextFormField(
+                  initialValue: currentReps.toString(),
+                  keyboardType: TextInputType.number,
+                  onChanged: (newRep) => setState(() => currentReps = int.tryParse(newRep) ?? currentReps),
+                  decoration: InputDecoration(
+                    labelText: 'Amount of repetitions',
+                    hintText: 'e.g. 30 repetitions',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
                   ),
-                  filled: true,
-                  fillColor: Colors.white,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-                  ),
+                ),
               ),
               const SizedBox(height: 16,),
             
               // Amount of weight
-              TextFormField(
-                initialValue: currentWeight.toString(),
-                keyboardType: TextInputType.number,
-                onChanged: (newWeight) => setState(() => currentWeight = int.tryParse(newWeight) ?? currentWeight),
-                decoration: InputDecoration(
-                  labelText: 'Amount of weight',
-                  hintText: 'e.g. 120 lbs',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+              Semantics(
+                label: 'Amount of weight',
+                child: TextFormField(
+                  initialValue: currentWeight.toString(),
+                  keyboardType: TextInputType.number,
+                  onChanged: (newWeight) => setState(() => currentWeight = int.tryParse(newWeight) ?? currentWeight),
+                  decoration: InputDecoration(
+                    labelText: 'Amount of weight',
+                    hintText: 'e.g. 120 lbs',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
                   ),
-                  filled: true,
-                  fillColor: Colors.white,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-                  ),
+                ),
               ),
               const SizedBox(height: 16,),
 
               // Duration of workout
-              TextFormField(
-                initialValue: currentDura.toString(),
-                keyboardType: TextInputType.number,
-                onChanged: (newDura) => setState(() => currentDura = int.tryParse(newDura) ?? currentDura),
-                decoration: InputDecoration(
-                  labelText: 'Duration of workout (in minutes)',
-                  hintText: 'e.g. 120 minutes',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+              Semantics(
+                label: 'Duration of workout (in minutes)',
+                child: TextFormField(
+                  initialValue: currentDura.toString(),
+                  keyboardType: TextInputType.number,
+                  onChanged: (newDura) => setState(() => currentDura = int.tryParse(newDura) ?? currentDura),
+                  decoration: InputDecoration(
+                    labelText: 'Duration of workout (in minutes)',
+                    hintText: 'e.g. 120 minutes',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
                   ),
-                  filled: true,
-                  fillColor: Colors.white,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-                  ),
+                ),
               ),
               const SizedBox(height: 16,),
             
-              ElevatedButton(
-                onPressed: () => _popBack(context),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromRGBO(128, 178, 213, 1),
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 24),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+              // Save button
+              Semantics(
+                label: 'Save Workout Entry',
+                button: true,
+                child: ElevatedButton(
+                  onPressed: () => _popBack(context),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromRGBO(128, 178, 213, 1),
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 24),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: const Text(
+                    'Save',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    )
                   ),
                 ),
-                child: const Text(
-                  'Save',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  )
-                )
               )
             ],
           ),
@@ -184,7 +203,6 @@ class _EntryViewState extends State<EntryView>{
       ),
     );
   }
-
 
   void _popBack(BuildContext context){
     final updatedEntry = JournalEntry(
@@ -201,6 +219,4 @@ class _EntryViewState extends State<EntryView>{
 
     Navigator.pop(context, updatedEntry);
   }
-
 }
-

@@ -1,7 +1,7 @@
 import 'package:isar/isar.dart';
 part 'journal_entry.g.dart';
 
-@collection
+@Collection()
 // Represents a single journal entry with a unique id, text, and time stamps
 class JournalEntry {
   // Unique id for the journal entry (managed by Isar)

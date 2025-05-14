@@ -59,6 +59,12 @@ class MainApp extends StatelessWidget {
         ),
       ),
       home: const AllEntriesView(),
+      builder: (context, child) {
+        return Semantics(
+          label: 'Workout Journal',
+          child: child!,
+        );
+      },
     );
   }
 }

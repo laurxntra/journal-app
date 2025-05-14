@@ -33,7 +33,14 @@ class JournalProvider extends ChangeNotifier {
 
   Future<void> upsertJournalEntry(JournalEntry entry) async {
     await _journal.upsertEntry(entry);
-    await loadEntries();
+
+    final index = _journal.entries.indexWhere((e) => e.id == entry.id);
+    if (index != -1) {
+      _journal.entries[index] = entry; 
+    } else {
+      _journal.entries.add(entry);
+    }
+
     notifyListeners();
   }
 }

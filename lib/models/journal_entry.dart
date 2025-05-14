@@ -8,7 +8,7 @@ class JournalEntry {
   Id? id;
 
   // Text for the content of the journal entry (exercise name)
-  late String workoutName;
+  late String text;
 
   // Timestamp that indicates when the last entry was edited
   late DateTime updatedAt;
@@ -35,7 +35,7 @@ class JournalEntry {
   // Factory constructor to create a new journal entry with default values. Automatically
   // assigns a unique id and sets time stamps
   factory JournalEntry.fromText({
-      String workoutName = '',
+      String text = '',
       String title = '',
       int sets = 0,
       int reps = 0,
@@ -44,7 +44,7 @@ class JournalEntry {
     }) {
     final now = DateTime.now();
     return JournalEntry(
-        workoutName: workoutName,
+        text: text,
         title: title,
         sets: sets,
         reps: reps,
@@ -56,7 +56,7 @@ class JournalEntry {
 
   // Constructor for creating a journal entry with specific values
   JournalEntry({
-      this.workoutName = 'Untitled Workout',
+      this.text = 'Untitled Workout',
       this.id,
       required this.updatedAt,
       required this.createdAt,
@@ -71,7 +71,7 @@ class JournalEntry {
   factory JournalEntry.empty() {
     final now = DateTime.now();
     return JournalEntry(
-      workoutName: 'Untitled Workout',
+      text: 'Untitled Workout',
       title: 'Untitled Entry',
       sets: 0,
       reps: 0,
@@ -88,7 +88,7 @@ class JournalEntry {
       : id = entry.id,
         createdAt = entry.createdAt,
         updatedAt = DateTime.now(),
-        workoutName = newText,
+        text = newText,
         title = entry.title,
         sets = entry.sets,
         reps = entry.reps,

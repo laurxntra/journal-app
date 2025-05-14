@@ -37,25 +37,25 @@ const JournalEntrySchema = CollectionSchema(
       name: r'sets',
       type: IsarType.long,
     ),
-    r'title': PropertySchema(
+    r'text': PropertySchema(
       id: 4,
+      name: r'text',
+      type: IsarType.string,
+    ),
+    r'title': PropertySchema(
+      id: 5,
       name: r'title',
       type: IsarType.string,
     ),
     r'updatedAt': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'updatedAt',
       type: IsarType.dateTime,
     ),
     r'weight': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'weight',
       type: IsarType.long,
-    ),
-    r'workoutName': PropertySchema(
-      id: 7,
-      name: r'workoutName',
-      type: IsarType.string,
     )
   },
   estimateSize: _journalEntryEstimateSize,
@@ -78,8 +78,8 @@ int _journalEntryEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  bytesCount += 3 + object.text.length * 3;
   bytesCount += 3 + object.title.length * 3;
-  bytesCount += 3 + object.workoutName.length * 3;
   return bytesCount;
 }
 
@@ -93,10 +93,10 @@ void _journalEntrySerialize(
   writer.writeLong(offsets[1], object.duration);
   writer.writeLong(offsets[2], object.reps);
   writer.writeLong(offsets[3], object.sets);
-  writer.writeString(offsets[4], object.title);
-  writer.writeDateTime(offsets[5], object.updatedAt);
-  writer.writeLong(offsets[6], object.weight);
-  writer.writeString(offsets[7], object.workoutName);
+  writer.writeString(offsets[4], object.text);
+  writer.writeString(offsets[5], object.title);
+  writer.writeDateTime(offsets[6], object.updatedAt);
+  writer.writeLong(offsets[7], object.weight);
 }
 
 JournalEntry _journalEntryDeserialize(
@@ -111,10 +111,10 @@ JournalEntry _journalEntryDeserialize(
     id: id,
     reps: reader.readLongOrNull(offsets[2]) ?? 0,
     sets: reader.readLongOrNull(offsets[3]) ?? 0,
-    title: reader.readString(offsets[4]),
-    updatedAt: reader.readDateTime(offsets[5]),
-    weight: reader.readLongOrNull(offsets[6]) ?? 0,
-    workoutName: reader.readString(offsets[7]),
+    text: reader.readStringOrNull(offsets[4]) ?? 'Untitled Workout',
+    title: reader.readStringOrNull(offsets[5]) ?? 'Untitled Entry',
+    updatedAt: reader.readDateTime(offsets[6]),
+    weight: reader.readLongOrNull(offsets[7]) ?? 0,
   );
   return object;
 }
@@ -135,13 +135,13 @@ P _journalEntryDeserializeProp<P>(
     case 3:
       return (reader.readLongOrNull(offset) ?? 0) as P;
     case 4:
-      return (reader.readString(offset)) as P;
+      return (reader.readStringOrNull(offset) ?? 'Untitled Workout') as P;
     case 5:
-      return (reader.readDateTime(offset)) as P;
+      return (reader.readStringOrNull(offset) ?? 'Untitled Entry') as P;
     case 6:
-      return (reader.readLongOrNull(offset) ?? 0) as P;
+      return (reader.readDateTime(offset)) as P;
     case 7:
-      return (reader.readString(offset)) as P;
+      return (reader.readLongOrNull(offset) ?? 0) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -531,6 +531,140 @@ extension JournalEntryQueryFilter
     });
   }
 
+  QueryBuilder<JournalEntry, JournalEntry, QAfterFilterCondition> textEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'text',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<JournalEntry, JournalEntry, QAfterFilterCondition>
+      textGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'text',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<JournalEntry, JournalEntry, QAfterFilterCondition> textLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'text',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<JournalEntry, JournalEntry, QAfterFilterCondition> textBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'text',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<JournalEntry, JournalEntry, QAfterFilterCondition>
+      textStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'text',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<JournalEntry, JournalEntry, QAfterFilterCondition> textEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'text',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<JournalEntry, JournalEntry, QAfterFilterCondition> textContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'text',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<JournalEntry, JournalEntry, QAfterFilterCondition> textMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'text',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<JournalEntry, JournalEntry, QAfterFilterCondition>
+      textIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'text',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<JournalEntry, JournalEntry, QAfterFilterCondition>
+      textIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'text',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<JournalEntry, JournalEntry, QAfterFilterCondition> titleEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -775,142 +909,6 @@ extension JournalEntryQueryFilter
       ));
     });
   }
-
-  QueryBuilder<JournalEntry, JournalEntry, QAfterFilterCondition>
-      workoutNameEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'workoutName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<JournalEntry, JournalEntry, QAfterFilterCondition>
-      workoutNameGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'workoutName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<JournalEntry, JournalEntry, QAfterFilterCondition>
-      workoutNameLessThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'workoutName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<JournalEntry, JournalEntry, QAfterFilterCondition>
-      workoutNameBetween(
-    String lower,
-    String upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'workoutName',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<JournalEntry, JournalEntry, QAfterFilterCondition>
-      workoutNameStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'workoutName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<JournalEntry, JournalEntry, QAfterFilterCondition>
-      workoutNameEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'workoutName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<JournalEntry, JournalEntry, QAfterFilterCondition>
-      workoutNameContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'workoutName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<JournalEntry, JournalEntry, QAfterFilterCondition>
-      workoutNameMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'workoutName',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<JournalEntry, JournalEntry, QAfterFilterCondition>
-      workoutNameIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'workoutName',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<JournalEntry, JournalEntry, QAfterFilterCondition>
-      workoutNameIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'workoutName',
-        value: '',
-      ));
-    });
-  }
 }
 
 extension JournalEntryQueryObject
@@ -969,6 +967,18 @@ extension JournalEntryQuerySortBy
     });
   }
 
+  QueryBuilder<JournalEntry, JournalEntry, QAfterSortBy> sortByText() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'text', Sort.asc);
+    });
+  }
+
+  QueryBuilder<JournalEntry, JournalEntry, QAfterSortBy> sortByTextDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'text', Sort.desc);
+    });
+  }
+
   QueryBuilder<JournalEntry, JournalEntry, QAfterSortBy> sortByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
@@ -1002,19 +1012,6 @@ extension JournalEntryQuerySortBy
   QueryBuilder<JournalEntry, JournalEntry, QAfterSortBy> sortByWeightDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'weight', Sort.desc);
-    });
-  }
-
-  QueryBuilder<JournalEntry, JournalEntry, QAfterSortBy> sortByWorkoutName() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'workoutName', Sort.asc);
-    });
-  }
-
-  QueryBuilder<JournalEntry, JournalEntry, QAfterSortBy>
-      sortByWorkoutNameDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'workoutName', Sort.desc);
     });
   }
 }
@@ -1081,6 +1078,18 @@ extension JournalEntryQuerySortThenBy
     });
   }
 
+  QueryBuilder<JournalEntry, JournalEntry, QAfterSortBy> thenByText() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'text', Sort.asc);
+    });
+  }
+
+  QueryBuilder<JournalEntry, JournalEntry, QAfterSortBy> thenByTextDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'text', Sort.desc);
+    });
+  }
+
   QueryBuilder<JournalEntry, JournalEntry, QAfterSortBy> thenByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
@@ -1116,19 +1125,6 @@ extension JournalEntryQuerySortThenBy
       return query.addSortBy(r'weight', Sort.desc);
     });
   }
-
-  QueryBuilder<JournalEntry, JournalEntry, QAfterSortBy> thenByWorkoutName() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'workoutName', Sort.asc);
-    });
-  }
-
-  QueryBuilder<JournalEntry, JournalEntry, QAfterSortBy>
-      thenByWorkoutNameDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'workoutName', Sort.desc);
-    });
-  }
 }
 
 extension JournalEntryQueryWhereDistinct
@@ -1157,6 +1153,13 @@ extension JournalEntryQueryWhereDistinct
     });
   }
 
+  QueryBuilder<JournalEntry, JournalEntry, QDistinct> distinctByText(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'text', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<JournalEntry, JournalEntry, QDistinct> distinctByTitle(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1173,13 +1176,6 @@ extension JournalEntryQueryWhereDistinct
   QueryBuilder<JournalEntry, JournalEntry, QDistinct> distinctByWeight() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'weight');
-    });
-  }
-
-  QueryBuilder<JournalEntry, JournalEntry, QDistinct> distinctByWorkoutName(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'workoutName', caseSensitive: caseSensitive);
     });
   }
 }
@@ -1216,6 +1212,12 @@ extension JournalEntryQueryProperty
     });
   }
 
+  QueryBuilder<JournalEntry, String, QQueryOperations> textProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'text');
+    });
+  }
+
   QueryBuilder<JournalEntry, String, QQueryOperations> titleProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'title');
@@ -1231,12 +1233,6 @@ extension JournalEntryQueryProperty
   QueryBuilder<JournalEntry, int, QQueryOperations> weightProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'weight');
-    });
-  }
-
-  QueryBuilder<JournalEntry, String, QQueryOperations> workoutNameProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'workoutName');
     });
   }
 }

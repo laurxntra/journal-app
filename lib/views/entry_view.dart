@@ -22,7 +22,7 @@ class _EntryViewState extends State<EntryView>{
   @override
   void initState() {
     super.initState();
-    currentText = widget.entry.workoutName.isNotEmpty ? widget.entry.workoutName : 'Untitled Workout';
+    currentText = widget.entry.text.isNotEmpty ? widget.entry.text : 'Untitled Workout';
     currentSets = widget.entry.sets;
     currentReps = widget.entry.reps;
     currentWeight = widget.entry.weight;
@@ -188,7 +188,7 @@ class _EntryViewState extends State<EntryView>{
 
   void _popBack(BuildContext context){
     final updatedEntry = JournalEntry(
-      workoutName: currentText,
+      text: currentText,
       title: currentTitle,
       id: widget.entry.id,
       createdAt: widget.entry.createdAt,

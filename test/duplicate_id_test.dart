@@ -26,7 +26,7 @@ void main() async {
 
   test('Can create and save a journal entry', () async {
     final entry = JournalEntry.fromText(
-      workoutName: 'Leg Press',
+      text: 'Leg Press',
       title: 'Leg Day',
       sets: 3,
       reps: 12,
@@ -45,7 +45,7 @@ void main() async {
     // Retrieve the entry from the database
     final retrievedEntries = isar.journalEntrys.where().findAllSync();
     assert(retrievedEntries.length == 1);
-    assert(entry.workoutName == retrievedEntries[0].workoutName);
+    assert(entry.text == retrievedEntries[0].text);
     assert(entry.title == retrievedEntries[0].title);
     assert(entry.sets == retrievedEntries[0].sets);
     assert(entry.reps == retrievedEntries[0].reps);
@@ -56,7 +56,7 @@ void main() async {
   test('Replacing Entry doesnt change ID', () async {
     // Create a new entry and save it
     final entry = JournalEntry.fromText(
-      workoutName: 'Squat',
+      text: 'Squat',
       title: 'Leg Day',
       sets: 4,
       reps: 10,
@@ -90,13 +90,13 @@ void main() async {
     assert(retrievedEntry != null);
 
     assert(entry.id == retrievedEntry!.id);
-    assert(entry.workoutName != retrievedEntry!.workoutName);
+    assert(entry.text != retrievedEntry!.text);
   });
 
   test('Creating multiple entries correctly increments ID', () async {
     // Create a new entry and save it
     final entry = JournalEntry.fromText(
-      workoutName: 'Push Up',
+      text: 'Push Up',
       title: 'Upper Body',
       sets: 3,
       reps: 15,
@@ -113,7 +113,7 @@ void main() async {
 
     // Create another entry and save it
     final entry2 = JournalEntry.fromText(
-      workoutName: 'Pull Up',
+      text: 'Pull Up',
       title: 'Upper Body',
       sets: 4,
       reps: 12,

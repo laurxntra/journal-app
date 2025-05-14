@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:isar/isar.dart';
-import 'package:journal/models/journal.dart';
 import 'package:journal/models/journal_entry.dart';
 import 'package:journal/providers/journal_provider.dart';
 
@@ -22,7 +21,7 @@ Future<Isar> getIsar() async {
 
 void main() async {
   final isar = await getIsar();
-  final JournalProvider journalProvider = JournalProvider(Journal(isar: isar), isar);
+  final JournalProvider journalProvider = JournalProvider(isar);
 
   test('Can create and save a journal entry', () async {
     final entry = JournalEntry.fromText(

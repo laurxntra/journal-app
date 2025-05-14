@@ -3,19 +3,22 @@ import 'package:journal/models/journal.dart';
 import 'package:journal/models/journal_entry.dart';
 import 'package:isar/isar.dart';
 
-
-// Manages the Journal and provides the updates for the app
+// Manages the Journal and provides updates to the app
 class JournalProvider extends ChangeNotifier {
   final Journal _journal;
   final Isar _isar;
   bool _isLoading = false;
 
-  JournalProvider(this._journal, this._isar);
-  
-  // Returns an unmodifiable list of journal entries
-  List<JournalEntry> get entries => List.unmodifiable(_journal.entries);
+  // Private constructor used internally
+  JournalProvider._(this._journal, this._isar);
 
-  // Returns a clone of the journal to prevent direct modifications
+  // Single factory constructor that both tests and app will use
+  factory JournalProvider(Isar isar) {
+    final journal = Journal(isar: isar);
+    return JournalProvider._(journal, isar);
+  }
+
+  List<JournalEntry> get entries => List.unmodifiable(_journal.entries);
   Journal get journal => _journal.clone();
   bool get isLoading => _isLoading;
 
@@ -29,14 +32,13 @@ class JournalProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Calls upsertEntry to make sure listeners are notified of any changes
   void upsertJournalEntry(JournalEntry entry) async {
-    _journal.upsertEntry(entry);
-    
+    await _journal.upsertEntry(entry);
+
     await _isar.writeTxn(() async {
       await _isar.journalEntrys.put(entry);
     });
-    // Makes sure the UI updates when data is being changed
+
     notifyListeners();
   }
 }

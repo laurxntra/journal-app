@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:journal/models/journal_entry.dart';
 
+// A screen to view and edit a single workout journal entry
+// Updates are saved when the user taps the save button and returns the updated entry
+//
+// Parameters: 
+// - entry: The JournalEntry to display and edit
 class EntryView extends StatefulWidget {
   final JournalEntry entry;
 
@@ -11,6 +16,7 @@ class EntryView extends StatefulWidget {
 }
 
 class _EntryViewState extends State<EntryView> {
+  // Editable state for each field in the form
   late String currentText;
   late int currentSets;
   late int currentReps;
@@ -21,6 +27,7 @@ class _EntryViewState extends State<EntryView> {
   @override
   void initState() {
     super.initState();
+    // Initalize current values from the provided JournalEntry/use default
     currentText = widget.entry.text.isNotEmpty ? widget.entry.text : 'Untitled Workout';
     currentSets = widget.entry.sets;
     currentReps = widget.entry.reps;
@@ -35,11 +42,13 @@ class _EntryViewState extends State<EntryView> {
       appBar: AppBar(
         title: Semantics(
           header: true,
+          // Displays workout title or an empty string if none
           child: Text(currentTitle.isNotEmpty ? currentTitle : ''),
         ),
       ),
       body: PopScope(
         canPop: false,
+        // Handles back navigation to save updated entry
         onPopInvokedWithResult: (didPop, result) {
           if (!didPop) {
             _popBack(context);
@@ -92,7 +101,7 @@ class _EntryViewState extends State<EntryView> {
               ),
               const SizedBox(height: 16),
 
-              // Sets
+              // Sets field 
               Semantics(
                 label: 'Amount of sets',
                 excludeSemantics: true,
@@ -114,7 +123,7 @@ class _EntryViewState extends State<EntryView> {
               ),
               const SizedBox(height: 16),
 
-              // Reps
+              // Reps field
               Semantics(
                 label: 'Amount of repetitions',
                 excludeSemantics: true,
@@ -136,7 +145,7 @@ class _EntryViewState extends State<EntryView> {
               ),
               const SizedBox(height: 16),
 
-              // Weight
+              // Weight field
               Semantics(
                 label: 'Amount of weight',
                 excludeSemantics: true,
@@ -158,7 +167,7 @@ class _EntryViewState extends State<EntryView> {
               ),
               const SizedBox(height: 16),
 
-              // Duration
+              // Duration field
               Semantics(
                 label: 'Duration of workout (in minutes)',
                 excludeSemantics: true,
@@ -180,7 +189,7 @@ class _EntryViewState extends State<EntryView> {
               ),
               const SizedBox(height: 16),
 
-              // Save Button
+              // Button to save changes and return updated entry
               Semantics(
                 label: 'Save Workout Entry',
                 excludeSemantics: true,
@@ -211,6 +220,10 @@ class _EntryViewState extends State<EntryView> {
     );
   }
 
+  // Creates a new JournalEntry from current field values and pops back to the previous screen
+  //
+  // Parameters:
+  // - context: build context for navigator
   void _popBack(BuildContext context) {
     final updatedEntry = JournalEntry(
       text: currentText,

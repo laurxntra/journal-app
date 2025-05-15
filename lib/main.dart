@@ -6,26 +6,32 @@ import 'package:journal/models/journal_entry.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
+// Global instance of the Isar database
 late Isar isar;
 
+// Main entry point for the workout journal app
 Future<void> main() async {
+  // Flutter bindings are initalizrd before async operations
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Getting local storage directory and open the Isar database
   final dir = await getApplicationDocumentsDirectory();
   isar = await Isar.open([JournalEntrySchema], directory: dir.path);
 
-  // Create the provider using only Isar
+  // Initalizing JournalProvider and load existing entries
   final journalProvider = JournalProvider(isar);
   await journalProvider.loadEntries();
 
+  // Launches the app with JournalProvider 
   runApp(
     ChangeNotifierProvider(
-      create: (_) => journalProvider, // reuse the loaded provider
+      create: (_) => journalProvider,
       child: const MainApp(),
     ),
   );
 }
 
+// Root widget that defines the app's theme and structure
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
@@ -34,6 +40,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       title: 'Journal App',
       debugShowCheckedModeBanner: false,
+      // Contains the app theme and color schemes
       theme: ThemeData(
         colorScheme: ColorScheme(
           brightness: Brightness.light,
@@ -47,6 +54,8 @@ class MainApp extends StatelessWidget {
           onSurface: Colors.black,
         ),
         useMaterial3: true,
+
+        // Default styling for input fields
         inputDecorationTheme: InputDecorationTheme(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
@@ -58,7 +67,10 @@ class MainApp extends StatelessWidget {
           labelStyle: const TextStyle(color: Color.fromRGBO(43, 70, 89, 1)),
         ),
       ),
+      // Main screen displaying all journal entries
       home: const AllEntriesView(),
+
+      // Semantic labels to the entire app for accessibility
       builder: (context, child) {
         return Semantics(
           label: 'Workout Journal',

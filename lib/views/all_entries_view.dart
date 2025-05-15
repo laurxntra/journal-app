@@ -79,15 +79,23 @@ Widget _createListElementForEntry(BuildContext context, JournalEntry entry) {
       label: 'View workout entry: $title, last updated on $subtitle',
       button: true,
       child: Material(
+        // Adds elevation for a shadow effect
         elevation: 2,
         borderRadius: BorderRadius.circular(16),
         color: Colors.white,
         child: ListTile(
+          // Applies rounded corners 
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          // Displays the entry's title
           title: Text(title),
+          // Unique id for the journal entry tile
+          key: Key('entry_file_${entry.id}'),
+          // Displays the formatted date/time of the last update
           subtitle: Text(subtitle),
           onTap: () => _navigateToEntry(context, entry),
+          // Icon to reprensent the tile is tappable
           trailing: const Icon(Icons.chevron_right),
+          // Icon to represent workout entries
           leading: const Icon(Icons.fitness_center),
         ),
       ),
@@ -95,9 +103,11 @@ Widget _createListElementForEntry(BuildContext context, JournalEntry entry) {
   );
 }
 
-// Navigates to the EntryView screen for editing/creating an entry
+// Opens the EntryView screen to view or edit a workout entry
 //
-// Returns an
+// Parameters:
+// - context: build context for navigation
+// - entry: The JournalEntry to view or edit
 Future<void> _navigateToEntry(BuildContext context, JournalEntry entry) async {
   final journalProvider = Provider.of<JournalProvider>(context, listen: false);
 
@@ -111,7 +121,12 @@ Future<void> _navigateToEntry(BuildContext context, JournalEntry entry) async {
   }
 }
 
-
+  // Formats a DateTime object into a string
+  // 
+  // Parameters:
+  // - when: The DateTime to format
+  //
+  // Returns: A formatted date and time string
   String _formatDateTime(DateTime when) {
     return DateFormat.yMd().add_jm().format(when);
   }

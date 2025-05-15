@@ -114,8 +114,6 @@ Describe the purpose of your app.
 Where in your repo can we find the design sketches that you made?
 - Folder named "prototype" will have my sketches in there
 
-Answer here: (delete this prompt)
-
 What was different in your final product from your original vision and sketches? If you were able to fully complete the app you designed, please list 1-2 things you would like to change in your app or add to your app if you had more time? 
 - One thing that was different from my original vision compared to my final product was adding the notes feature. I did not have time to implement this.
 - I would definitely add the notes section that intended on planning if I had more time as well as maybe a search/filter at the top of the page to allow users to filter through their workouts based off the type of "day" they wrote down

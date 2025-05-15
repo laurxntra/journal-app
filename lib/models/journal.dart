@@ -19,24 +19,25 @@ class Journal {
   /// - isar: The Isar database referenced used
   /// - name: The name for the journal
   Journal({required Isar isar, this.name = 'My work and Jot'})
-    : _isar = isar,
-    _entries = [];
+      : _isar = isar,
+        _entries = [];
 
   /// Loads all journal entries from the Isar database and populates the entries list
-  /// 
-  /// Returns: 
+  ///
+  /// Returns:
   /// - A Future that completes when entries have been loaded
   Future<void> loadEntries() async {
     _entries = await _isar.journalEntrys.where().findAll();
   }
+
   /// Returns a copy of the entries list
   List<JournalEntry> get entries => List.from(_entries);
 
   /// Inserts a new entry/updates an existing one based on id
-  /// 
+  ///
   /// Parameters:
   /// - entry: the journal entry to insert or update
-  /// 
+  ///
   /// Returns:
   /// - A Future that completes once the operation is done
   Future<void> upsertEntry(JournalEntry entry) async {
@@ -52,21 +53,21 @@ class Journal {
 
     // Finds the index of the entry with the matching id
     final int index = _entries.indexWhere((e) => e.id == entry.id);
-    
+
     // If the entry exists, replace it
     if (index != -1) {
       _entries[index] = entry;
-    // Otherwise, add a new entry
+      // Otherwise, add a new entry
     } else {
       _entries.add(entry);
     }
   }
 
   /// Creates a copy of the journal instance
-  /// 
-  /// Returns: 
+  ///
+  /// Returns:
   /// - A new Journal object with identical properties and data
-   Journal clone() {
+  Journal clone() {
     final cloned = Journal(isar: _isar, name: name);
     cloned._entries = List.from(_entries);
     return cloned;

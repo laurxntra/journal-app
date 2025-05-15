@@ -22,7 +22,7 @@ Future<void> main() async {
   final journalProvider = JournalProvider(isar);
   await journalProvider.loadEntries();
 
-  // Launches the app with JournalProvider 
+  // Launches the app with JournalProvider
   runApp(
     ChangeNotifierProvider(
       create: (_) => journalProvider,
@@ -63,13 +63,13 @@ class MainApp extends StatelessWidget {
           ),
           filled: true,
           fillColor: Colors.white,
-          contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
           labelStyle: const TextStyle(color: Color.fromRGBO(43, 70, 89, 1)),
         ),
       ),
       // Main screen displaying all journal entries
       home: const AllEntriesView(),
-
     );
   }
 }

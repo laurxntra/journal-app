@@ -32,7 +32,6 @@ class JournalEntry {
   // Amount of weight used in lbs
   int weight;
 
-
   /// Factory constructor that creates a new journal entry with default values
   /// Parameters:
   /// - text: name of exercise
@@ -43,15 +42,15 @@ class JournalEntry {
   /// - weight: weight in pounds
   ///
   /// Returns:
-  /// - A JournalEntry with all the fields initalized 
+  /// - A JournalEntry with all the fields initalized
   factory JournalEntry.fromText({
-      String text = '',
-      String title = '',
-      int sets = 0,
-      int reps = 0,
-      int duration = 0,
-      int weight = 0,
-    }) {
+    String text = '',
+    String title = '',
+    int sets = 0,
+    int reps = 0,
+    int duration = 0,
+    int weight = 0,
+  }) {
     final now = DateTime.now();
     return JournalEntry(
         text: text,
@@ -76,8 +75,8 @@ class JournalEntry {
   /// - reps: number of repetitions
   /// - duration: amount of time in minutes
   /// - weight: amount of weight
-  JournalEntry({
-      this.text = 'Untitled Workout',
+  JournalEntry(
+      {this.text = 'Untitled Workout',
       this.id,
       required this.updatedAt,
       required this.createdAt,
@@ -85,16 +84,15 @@ class JournalEntry {
       this.sets = 0,
       this.reps = 0,
       this.duration = 0,
-      this.weight = 0
-  });
+      this.weight = 0});
 
   /// Factory constructor to create  a completely empty journal entry
-  /// 
-  /// Returns: 
+  ///
+  /// Returns:
   /// - A JournalEntry with default values and current timestamps
   factory JournalEntry.empty() {
     // Set timestamps to current time when creating a new entry
-    final now = DateTime.now(); 
+    final now = DateTime.now();
     return JournalEntry(
       text: 'Untitled Workout',
       title: 'Untitled Entry',
@@ -113,7 +111,7 @@ class JournalEntry {
   /// - entry: the original journal entry to copy from
   /// - newText: the new exercise text
   ///
-  /// Returns: 
+  /// Returns:
   /// - A modified JournalEntry with updated text and timestamp
   JournalEntry.withUpdatedText(JournalEntry entry, String newText)
       : id = entry.id,

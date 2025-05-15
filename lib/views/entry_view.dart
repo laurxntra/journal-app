@@ -4,7 +4,7 @@ import 'package:journal/models/journal_entry.dart';
 /// A screen to view and edit a single workout journal entry
 /// Updates are saved when the user taps the save button and returns the updated entry
 ///
-/// Parameters: 
+/// Parameters:
 /// - entry: The JournalEntry to display and edit
 class EntryView extends StatefulWidget {
   final JournalEntry entry;
@@ -28,7 +28,8 @@ class _EntryViewState extends State<EntryView> {
   void initState() {
     super.initState();
     // Initalize current values from the provided JournalEntry/use default
-    currentText = widget.entry.text.isNotEmpty ? widget.entry.text : 'Untitled Workout';
+    currentText =
+        widget.entry.text.isNotEmpty ? widget.entry.text : 'Untitled Workout';
     currentSets = widget.entry.sets;
     currentReps = widget.entry.reps;
     currentWeight = widget.entry.weight;
@@ -59,14 +60,14 @@ class _EntryViewState extends State<EntryView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               // Workout Title
               Semantics(
                 label: 'Workout Title',
                 excludeSemantics: true,
                 child: TextFormField(
                   initialValue: currentTitle,
-                  onChanged: (newTitle) => setState(() => currentTitle = newTitle),
+                  onChanged: (newTitle) =>
+                      setState(() => currentTitle = newTitle),
                   decoration: InputDecoration(
                     labelText: 'Workout Title',
                     hintText: 'e.g. Leg Day',
@@ -75,7 +76,8 @@ class _EntryViewState extends State<EntryView> {
                     ),
                     filled: true,
                     fillColor: Colors.white,
-                    contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 16, horizontal: 12),
                   ),
                 ),
               ),
@@ -96,20 +98,22 @@ class _EntryViewState extends State<EntryView> {
                     ),
                     filled: true,
                     fillColor: Colors.white,
-                    contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 16, horizontal: 12),
                   ),
                 ),
               ),
               const SizedBox(height: 16),
 
-              // Sets field 
+              // Sets field
               Semantics(
                 label: 'Amount of sets',
                 excludeSemantics: true,
                 child: TextFormField(
                   initialValue: currentSets.toString(),
                   keyboardType: TextInputType.number,
-                  onChanged: (newSet) => setState(() => currentSets = int.tryParse(newSet) ?? currentSets),
+                  onChanged: (newSet) => setState(
+                      () => currentSets = int.tryParse(newSet) ?? currentSets),
                   decoration: InputDecoration(
                     labelText: 'Amount of sets',
                     hintText: 'e.g. 5 sets',
@@ -118,7 +122,8 @@ class _EntryViewState extends State<EntryView> {
                     ),
                     filled: true,
                     fillColor: Colors.white,
-                    contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 16, horizontal: 12),
                   ),
                 ),
               ),
@@ -131,7 +136,8 @@ class _EntryViewState extends State<EntryView> {
                 child: TextFormField(
                   initialValue: currentReps.toString(),
                   keyboardType: TextInputType.number,
-                  onChanged: (newRep) => setState(() => currentReps = int.tryParse(newRep) ?? currentReps),
+                  onChanged: (newRep) => setState(
+                      () => currentReps = int.tryParse(newRep) ?? currentReps),
                   decoration: InputDecoration(
                     labelText: 'Amount of repetitions',
                     hintText: 'e.g. 30 repetitions',
@@ -140,7 +146,8 @@ class _EntryViewState extends State<EntryView> {
                     ),
                     filled: true,
                     fillColor: Colors.white,
-                    contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 16, horizontal: 12),
                   ),
                 ),
               ),
@@ -153,7 +160,8 @@ class _EntryViewState extends State<EntryView> {
                 child: TextFormField(
                   initialValue: currentWeight.toString(),
                   keyboardType: TextInputType.number,
-                  onChanged: (newWeight) => setState(() => currentWeight = int.tryParse(newWeight) ?? currentWeight),
+                  onChanged: (newWeight) => setState(() =>
+                      currentWeight = int.tryParse(newWeight) ?? currentWeight),
                   decoration: InputDecoration(
                     labelText: 'Amount of weight',
                     hintText: 'e.g. 120 lbs',
@@ -162,7 +170,8 @@ class _EntryViewState extends State<EntryView> {
                     ),
                     filled: true,
                     fillColor: Colors.white,
-                    contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 16, horizontal: 12),
                   ),
                 ),
               ),
@@ -175,7 +184,8 @@ class _EntryViewState extends State<EntryView> {
                 child: TextFormField(
                   initialValue: currentDura.toString(),
                   keyboardType: TextInputType.number,
-                  onChanged: (newDura) => setState(() => currentDura = int.tryParse(newDura) ?? currentDura),
+                  onChanged: (newDura) => setState(
+                      () => currentDura = int.tryParse(newDura) ?? currentDura),
                   decoration: InputDecoration(
                     labelText: 'Duration of workout (in minutes)',
                     hintText: 'e.g. 120 minutes',
@@ -184,7 +194,8 @@ class _EntryViewState extends State<EntryView> {
                     ),
                     filled: true,
                     fillColor: Colors.white,
-                    contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 16, horizontal: 12),
                   ),
                 ),
               ),
@@ -200,7 +211,8 @@ class _EntryViewState extends State<EntryView> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromRGBO(128, 178, 213, 1),
                     foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 24),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 15, horizontal: 24),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -222,7 +234,7 @@ class _EntryViewState extends State<EntryView> {
   }
 
   /// Creates an updated JournalEntry from the current field values and will
-  /// navigate back to the previous screen and pass the results 
+  /// navigate back to the previous screen and pass the results
   ///
   /// Parameters:
   /// - context: build context for navigator

@@ -3,6 +3,7 @@ part 'journal_entry.g.dart';
 
 @Collection()
 // Represents a single journal entry with a unique id, text, and time stamps
+// This class uses Isar database with an optional unique id
 class JournalEntry {
   // Unique id for the journal entry (managed by Isar)
   Id? id;
@@ -32,17 +33,17 @@ class JournalEntry {
   int weight;
 
 
-  // Factory constructor that creates a new journal entry with default values
-  // Parameters:
-  // - text: name of exercise
-  // - title: Title of the workout entry
-  // - sets: number of sets
-  // - reps: number of repetitions
-  // - duration: Duration in minutes
-  // - weight: weight in pounds
-  //
-  // Returns:
-  // - A JournalEntry with all the fields initalized 
+  /// Factory constructor that creates a new journal entry with default values
+  /// Parameters:
+  /// - text: name of exercise
+  /// - title: Title of the workout entry
+  /// - sets: number of sets
+  /// - reps: number of repetitions
+  /// - duration: Duration in minutes
+  /// - weight: weight in pounds
+  ///
+  /// Returns:
+  /// - A JournalEntry with all the fields initalized 
   factory JournalEntry.fromText({
       String text = '',
       String title = '',
@@ -63,18 +64,18 @@ class JournalEntry {
         createdAt: now);
   }
 
-  // Main constructor for creating a journal entry
-  //
-  // Parameters:
-  // - text: name of exercise
-  // - id: id, this is used when loaded from Isar
-  // - createdAt: Timestamp when the entry was created
-  // - updatedAt: Timestamp of last update
-  // - title: title of the workout entry
-  // - sets: number of sets
-  // - reps: number of repetitions
-  // - duration: amount of time in minutes
-  // - weight: amount of weight
+  /// Main constructor for creating a journal entry
+  ///
+  /// Parameters:
+  /// - text: name of exercise
+  /// - id: id, this is used when loaded from Isar
+  /// - createdAt: Timestamp when the entry was created
+  /// - updatedAt: Timestamp of last update
+  /// - title: title of the workout entry
+  /// - sets: number of sets
+  /// - reps: number of repetitions
+  /// - duration: amount of time in minutes
+  /// - weight: amount of weight
   JournalEntry({
       this.text = 'Untitled Workout',
       this.id,
@@ -87,11 +88,13 @@ class JournalEntry {
       this.weight = 0
   });
 
-  // Factory constructor to create  a completely empty journal entry
-  // 
-  // Returns: A JournalEntry with default values and current timestamps
+  /// Factory constructor to create  a completely empty journal entry
+  /// 
+  /// Returns: 
+  /// - A JournalEntry with default values and current timestamps
   factory JournalEntry.empty() {
-    final now = DateTime.now();
+    // Set timestamps to current time when creating a new entry
+    final now = DateTime.now(); 
     return JournalEntry(
       text: 'Untitled Workout',
       title: 'Untitled Entry',
@@ -104,13 +107,14 @@ class JournalEntry {
     );
   }
 
-  // Constructor that creates a new journal entry from an existing one
-  //
-  // Parameters:
-  // - entry: the original journal entry to copy from
-  // - newText: the new exercise text
-  //
-  // Returns: A modified JournalEntry with updated text and timestamp
+  /// Constructor that creates a new journal entry from an existing one
+  ///
+  /// Parameters:
+  /// - entry: the original journal entry to copy from
+  /// - newText: the new exercise text
+  ///
+  /// Returns: 
+  /// - A modified JournalEntry with updated text and timestamp
   JournalEntry.withUpdatedText(JournalEntry entry, String newText)
       : id = entry.id,
         createdAt = entry.createdAt,

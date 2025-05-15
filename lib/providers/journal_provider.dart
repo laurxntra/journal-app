@@ -14,10 +14,10 @@ class JournalProvider extends ChangeNotifier {
   // Private constructor used internally
   JournalProvider._(this._journal);
 
-  // Factory constructor to create a JournalProvider instance
-  // 
-  // Parameters:
-  // - isar: The Isar database passed in for journal storage
+  /// Factory constructor to create a JournalProvider instance
+  /// 
+  /// Parameters:
+  /// - isar: The Isar database passed in for journal storage
   factory JournalProvider(Isar isar) {
     final journal = Journal(isar: isar);
     return JournalProvider._(journal);
@@ -25,7 +25,8 @@ class JournalProvider extends ChangeNotifier {
 
   // Getter for the list of journal entries
   //
-  // Returns: A unmodifiable list to prevent accidental edits
+  // Returns:
+  // - A unmodifiable list to prevent accidental edits
   List<JournalEntry> get entries => List.unmodifiable(_journal.entries);
   
   // Returns: a cloned copy of the current journal
@@ -34,7 +35,7 @@ class JournalProvider extends ChangeNotifier {
   // Returns: whether the journal is currently loading data
   bool get isLoading => _isLoading;
 
-  // Loads journal entries from the database and updates listeners
+  /// Loads journal entries from the database and updates listeners
   Future<void> loadEntries() async {
     _isLoading = true;
     // notifies UI to show loading state
@@ -49,10 +50,10 @@ class JournalProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Adds or updates a journal entry and reloads the list
-  //
-  // Parameters: 
-  // - entry: The JournalEntry to be saved or updated
+  /// Adds or updates a journal entry and reloads the list
+  ///
+  /// Parameters: 
+  /// - entry: The JournalEntry to be saved or updated
   Future<void> upsertJournalEntry(JournalEntry entry) async {
     // Save/update in the database
     await _journal.upsertEntry(entry);

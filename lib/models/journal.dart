@@ -1,7 +1,8 @@
 import 'package:journal/models/journal_entry.dart';
 import 'package:isar/isar.dart';
 
-// Represents a journal that manages a collection of JournalEntry objects.
+/// Manages a collection of JournalEntry objects utilizing Isar database
+/// to load, update, and retrieve journal entries
 class Journal {
   // References to the Isar database
   final Isar _isar;
@@ -12,26 +13,32 @@ class Journal {
   // list of workout entries
   List<JournalEntry> _entries;
 
-  // Constructor to initalize the Journal with a given name and associated Isar
-  //
-  // Parameters:
-  // - isar: The Isar database referenced used
-  // - name: The name for the journal
+  /// Constructor to initalize the Journal with a given name and associated Isar
+  ///
+  /// Parameters:
+  /// - isar: The Isar database referenced used
+  /// - name: The name for the journal
   Journal({required Isar isar, this.name = 'My work and Jot'})
     : _isar = isar,
     _entries = [];
 
-  // Loads all journal entries from the Isar database and populates the entries list
+  /// Loads all journal entries from the Isar database and populates the entries list
+  /// 
+  /// Returns: 
+  /// - A Future that completes when entries have been loaded
   Future<void> loadEntries() async {
     _entries = await _isar.journalEntrys.where().findAll();
   }
-  // Returns a copy of the entries list
+  /// Returns a copy of the entries list
   List<JournalEntry> get entries => List.from(_entries);
 
-  // Inserts a new entry/updates an existing one based on id
-  // 
-  // Parameters:
-  // - entry: the journal entry to insert or update
+  /// Inserts a new entry/updates an existing one based on id
+  /// 
+  /// Parameters:
+  /// - entry: the journal entry to insert or update
+  /// 
+  /// Returns:
+  /// - A Future that completes once the operation is done
   Future<void> upsertEntry(JournalEntry entry) async {
     await _isar.writeTxn(() async {
       // insert or update entry in the database to get its id
@@ -55,9 +62,10 @@ class Journal {
     }
   }
 
-  // Creates a copy of the journal instance
-  // 
-  // Returns: A new Journal object with identical properties and data
+  /// Creates a copy of the journal instance
+  /// 
+  /// Returns: 
+  /// - A new Journal object with identical properties and data
    Journal clone() {
     final cloned = Journal(isar: _isar, name: name);
     cloned._entries = List.from(_entries);

@@ -5,7 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:journal/providers/journal_provider.dart';
 import 'package:provider/provider.dart';
 
-// Displays the list of all workout journal entries
+/// Displays the list of all workout journal entries
+/// Allows navigation to add or edit individual entries
 class AllEntriesView extends StatelessWidget {
   const AllEntriesView({super.key});
 
@@ -61,16 +62,18 @@ Widget build(BuildContext context) {
   );
 }
 
-// Creates a card list for a journal entry
-// 
-// Parameters:
-// - context: build context for navigation
-// - entry: The JournalEntry to display
-//
-// Returns: A widget representing one entry
+/// Creates a card list for a journal entry
+/// 
+/// Parameters:
+/// - context: build context for navigation
+/// - entry: The JournalEntry to display
+///
+/// Returns: 
+/// - A widget representing one entry
 Widget _createListElementForEntry(BuildContext context, JournalEntry entry) {
   // Show 'Untitled Entry' if there is no title present
   final title = entry.title.isNotEmpty ? entry.title : 'Untitled Entry';
+  // Format the last updated date/time for display
   final subtitle = _formatDateTime(entry.updatedAt);
 
   return Padding(
@@ -103,11 +106,12 @@ Widget _createListElementForEntry(BuildContext context, JournalEntry entry) {
   );
 }
 
-// Opens the EntryView screen to view or edit a workout entry
-//
-// Parameters:
-// - context: build context for navigation
-// - entry: The JournalEntry to view or edit
+/// Navigates to the EntryView screen to view or edit a workout entry.
+/// After editing, if a new/updated entry is returned, then save it using our provider
+///
+/// Parameters:
+/// - context: build context for navigation
+/// - entry: The JournalEntry to view or edit
 Future<void> _navigateToEntry(BuildContext context, JournalEntry entry) async {
   final journalProvider = Provider.of<JournalProvider>(context, listen: false);
 
@@ -121,12 +125,13 @@ Future<void> _navigateToEntry(BuildContext context, JournalEntry entry) async {
   }
 }
 
-  // Formats a DateTime object into a string
-  // 
-  // Parameters:
-  // - when: The DateTime to format
-  //
-  // Returns: A formatted date and time string
+  /// Formats a DateTime object into a string
+  /// 
+  /// Parameters:
+  /// - when: The DateTime to format
+  ///
+  /// Returns: 
+  /// - A formatted date and time string
   String _formatDateTime(DateTime when) {
     return DateFormat.yMd().add_jm().format(when);
   }

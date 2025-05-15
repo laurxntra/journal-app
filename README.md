@@ -64,6 +64,11 @@ I had a lot of issues with my XCode from AS5 and currently.. these websites help
 - https://dart.dev/language/functions
 - https://stackoverflow.com/questions/60222500/how-to-return-bool-value-with-navigator-pop
 - https://stackoverflow.com/questions/77357118/getting-the-other-values-in-a-record-if-given-the-id-in-isar-database-using-flut
+- https://api.flutter.dev/flutter/material/FloatingActionButton-class.html
+- https://docs.flutter.dev/ui/navigation
+- https://stackoverflow.com/questions/66279804/flutter-navigator-2-0-how-to-return-data-from-a-screen
+- https://stackoverflow.com/questions/65029049/navigator-pop-with-argument
+- https://isar.dev/tutorials/quickstart.html
 - 
 
 

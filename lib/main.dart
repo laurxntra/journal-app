@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 // Global instance of the Isar database
 late Isar isar;
 
-// Main entry point for the workout journal app
+/// Main entry point for the workout journal app
 Future<void> main() async {
   // Flutter bindings are initalizrd before async operations
   WidgetsFlutterBinding.ensureInitialized();

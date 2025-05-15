@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:journal/models/journal_entry.dart';
 
-// A screen to view and edit a single workout journal entry
-// Updates are saved when the user taps the save button and returns the updated entry
-//
-// Parameters: 
-// - entry: The JournalEntry to display and edit
+/// A screen to view and edit a single workout journal entry
+/// Updates are saved when the user taps the save button and returns the updated entry
+///
+/// Parameters: 
+/// - entry: The JournalEntry to display and edit
 class EntryView extends StatefulWidget {
   final JournalEntry entry;
 
@@ -17,12 +17,12 @@ class EntryView extends StatefulWidget {
 
 class _EntryViewState extends State<EntryView> {
   // Editable state for each field in the form
-  late String currentText;
-  late int currentSets;
-  late int currentReps;
-  late int currentWeight;
-  late int currentDura;
-  late String currentTitle;
+  late String currentText; // Entry workout name
+  late int currentSets; // Entry number of sets
+  late int currentReps; // Entry number of repetitions
+  late int currentWeight; // Entry weight used
+  late int currentDura; // entry duration
+  late String currentTitle; // entry workout title
 
   @override
   void initState() {
@@ -59,6 +59,7 @@ class _EntryViewState extends State<EntryView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
               // Workout Title
               Semantics(
                 label: 'Workout Title',
@@ -220,10 +221,11 @@ class _EntryViewState extends State<EntryView> {
     );
   }
 
-  // Creates a new JournalEntry from current field values and pops back to the previous screen
-  //
-  // Parameters:
-  // - context: build context for navigator
+  /// Creates an updated JournalEntry from the current field values and will
+  /// navigate back to the previous screen and pass the results 
+  ///
+  /// Parameters:
+  /// - context: build context for navigator
   void _popBack(BuildContext context) {
     final updatedEntry = JournalEntry(
       text: currentText,

@@ -9,88 +9,72 @@ class AllEntriesView extends StatelessWidget {
   const AllEntriesView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Semantics(
-          child: const Text('All Workout Entries'),
-        ),
-        actions: [
-          Semantics(
-            label: 'Add a new workout entry',
-            excludeSemantics: true,
-            child: IconButton(
-              icon: const Icon(Icons.add),
-              onPressed: () => _navigateToEntry(context, JournalEntry.empty()),
-            ),
-          ),
-        ],
+  @override
+Widget build(BuildContext context) {
+  final journalProvider = Provider.of<JournalProvider>(context);
+  final entries = journalProvider.entries;
+
+  return Scaffold(
+    appBar: AppBar(
+      title: Semantics(
+        child: const Text('All Workout Entries'),
       ),
-      body: Consumer<JournalProvider>(
-        builder: (context, journalProvider, child) {
-          final entries = journalProvider.entries;
-
-          if (entries.isEmpty) {
-            return const Center(
-              child: Text('No workout entries yet.'),
-            );
-          }
-
-          return ListView.builder(
+      actions: [
+        Semantics(
+          label: 'Add a new workout entry',
+          excludeSemantics: true,
+          child: IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () => _navigateToEntry(context, JournalEntry.empty()),
+          ),
+        ),
+      ],
+    ),
+    body: entries.isEmpty
+        ? const Center(child: Text('No workout entries yet.'))
+        : ListView.builder(
             itemCount: entries.length,
-            itemBuilder: (context, index) {
-              return _createListElementForEntry(context, entries[index]);
-            },
-          );
-        },
-      ),
-      floatingActionButton: Semantics(
-        label: 'Add a new workout entry',
-        excludeSemantics: true,
-        child: FloatingActionButton(
-          onPressed: () => _navigateToEntry(context, JournalEntry.empty()),
-          child: const Icon(Icons.add),
-        ),
-      ),
-    );
-  }
-
-  Widget _createListElementForEntry(BuildContext context, JournalEntry entry) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(
-            color: Colors.white,
-            width: 1.5,
+            itemBuilder: (context, index) =>
+                _createListElementForEntry(context, entries[index]),
           ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black,
-              blurRadius: 4,
-              offset: Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Semantics(
-          label: 'Workout Entry: ${entry.title.isNotEmpty ? entry.title 
-            : 'Untitled Entry'}, Last updated on ${_formatDateTime(entry.updatedAt)}',
-            excludeSemantics: true,
-          button: true,
-          child: ListTile(
-            title: Text(entry.title.isNotEmpty ? entry.title : 'Untitled Entry'),
-            subtitle: Text(_formatDateTime(entry.updatedAt)),
-            onTap: () {
-              _navigateToEntry(context, entry);
-            },
-          ),
-        ),
-
+    floatingActionButton: Semantics(
+      label: 'Add a new workout entry',
+      excludeSemantics: true,
+      child: FloatingActionButton(
+        onPressed: () => _navigateToEntry(context, JournalEntry.empty()),
+        child: const Icon(Icons.add),
       ),
-    );
-  }
+    ),
+  );
+}
+
+
+Widget _createListElementForEntry(BuildContext context, JournalEntry entry) {
+  final title = entry.title.isNotEmpty ? entry.title : 'Untitled Entry';
+  final subtitle = _formatDateTime(entry.updatedAt);
+
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    child: Material(
+      elevation: 2,
+      borderRadius: BorderRadius.circular(16),
+      color: Colors.white,
+      child: ListTile(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Text(title),
+        subtitle: Text(subtitle),
+        onTap: () => _navigateToEntry(context, entry),
+        trailing: const Icon(Icons.chevron_right),
+        leading: Semantics(
+          label: 'Workout entry: $title, last updated on $subtitle',
+          excludeSemantics: true,
+          child: const Icon(Icons.fitness_center),
+        ),
+      ),
+    ),
+  );
+}
+
 
   Future<void> _navigateToEntry(BuildContext context, JournalEntry entry) async {
     final newEntry = await Navigator.push(

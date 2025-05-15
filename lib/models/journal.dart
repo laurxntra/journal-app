@@ -24,7 +24,10 @@ class Journal {
   // Inserts a new entry/updates an existing one based on id
   Future<void> upsertEntry(JournalEntry entry) async {
     await _isar.writeTxn(() async {
-      await _isar.journalEntrys.put(entry);
+      final id = await _isar.journalEntrys.put(entry);
+      if (entry.id == null || entry.id == 0) {
+        entry.id = id;
+      }
     });
 
     // Finds the index of the entry with the matching id

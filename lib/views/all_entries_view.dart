@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 class AllEntriesView extends StatelessWidget {
   const AllEntriesView({super.key});
 
+
 @override
 Widget build(BuildContext context) {
   final journalProvider = Provider.of<JournalProvider>(context);
@@ -29,13 +30,21 @@ Widget build(BuildContext context) {
         ),
       ],
     ),
-    body: entries.isEmpty
-        ? const Center(child: Text('No workout entries yet.'))
-        : ListView.builder(
-            itemCount: entries.length,
-            itemBuilder: (context, index) =>
-                _createListElementForEntry(context, entries[index]),
-          ),
+    body: ListView.builder(
+      itemCount: entries.isEmpty ? 1 : entries.length,
+      itemBuilder: (context, index) {
+        if (entries.isEmpty) {
+          return const Center(
+            child: Padding(
+              padding: EdgeInsets.all(24.0),
+              child: Text('No workout entries yet.'),
+            ),
+          );
+        } else {
+          return _createListElementForEntry(context, entries[index]);
+        }
+      },
+    ),
     floatingActionButton: Semantics(
       label: 'Add a new workout entry',
       excludeSemantics: true,
@@ -46,6 +55,7 @@ Widget build(BuildContext context) {
     ),
   );
 }
+
 
 
   Widget _createListElementForEntry(BuildContext context, JournalEntry entry) {

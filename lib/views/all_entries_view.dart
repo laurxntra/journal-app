@@ -15,38 +15,34 @@ Widget build(BuildContext context) {
   final entries = journalProvider.entries;
 
   return Scaffold(
-    appBar: AppBar(
-      title: Semantics(
-        child: const Text('All Workout Entries'),
-      ),
-      actions: [
-        Semantics(
-          label: 'Add a new workout entry',
-          excludeSemantics: true,
-          child: IconButton(
-            key: const Key('add_entry_button'),
-            icon: const Icon(Icons.add),
-            onPressed: () => _navigateToEntry(context, JournalEntry.empty()),
+  appBar: AppBar(
+    title: const Text('All Workout Entries'),
+  ),
+  body: ListView.builder(
+    itemCount: entries.isEmpty ? 1 : entries.length,
+    itemBuilder: (context, index) {
+      if (entries.isEmpty) {
+        return const Center(
+          child: Padding(
+            padding: EdgeInsets.all(24.0),
+            child: Text('No workout entries yet.'),
           ),
-        ),
-      ],
+        );
+      } else {
+        return _createListElementForEntry(context, entries[index]);
+      }
+    },
+  ),
+  floatingActionButton: Semantics(
+    label: 'Add a new workout entry',
+    excludeSemantics: true,
+    child: FloatingActionButton(
+      key: const Key('add_entry_button'),
+      onPressed: () => _navigateToEntry(context, JournalEntry.empty()),
+      child: const Icon(Icons.add),
     ),
-    body: ListView.builder(
-      itemCount: entries.isEmpty ? 1 : entries.length,
-      itemBuilder: (context, index) {
-        if (entries.isEmpty) {
-          return const Center(
-            child: Padding(
-              padding: EdgeInsets.all(24.0),
-              child: Text('No workout entries yet.'),
-            ),
-          );
-        } else {
-          return _createListElementForEntry(context, entries[index]);
-        }
-      },
-    ),
-  );
+  ),
+);
 }
 
 

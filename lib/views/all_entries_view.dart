@@ -75,6 +75,7 @@ Widget _createListElementForEntry(BuildContext context, JournalEntry entry) {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           title: Text(title),
           subtitle: Text(subtitle),
+          key: Key('entry_file_${entry.id}'),
           onTap: () => _navigateToEntry(context, entry),
           trailing: const Icon(Icons.chevron_right),
           leading: const Icon(Icons.fitness_center),
@@ -86,14 +87,15 @@ Widget _createListElementForEntry(BuildContext context, JournalEntry entry) {
 
 
 
-  Future<void> _navigateToEntry(BuildContext context, JournalEntry entry) async {
+Future<void> _navigateToEntry(BuildContext context, JournalEntry entry) async {
+  final journalProvider = Provider.of<JournalProvider>(context, listen: false);
+
   final JournalEntry? newEntry = await Navigator.push<JournalEntry>(
     context,
     MaterialPageRoute(builder: (context) => EntryView(entry: entry)),
   );
 
   if (newEntry != null) {
-    final journalProvider = Provider.of<JournalProvider>(context, listen: false);
     await journalProvider.upsertJournalEntry(newEntry);
   }
 }

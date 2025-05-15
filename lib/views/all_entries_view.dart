@@ -58,31 +58,32 @@ Widget build(BuildContext context) {
 
 
 
-  Widget _createListElementForEntry(BuildContext context, JournalEntry entry) {
+Widget _createListElementForEntry(BuildContext context, JournalEntry entry) {
   final title = entry.title.isNotEmpty ? entry.title : 'Untitled Entry';
   final subtitle = _formatDateTime(entry.updatedAt);
 
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-    child: Material(
-      elevation: 2,
-      borderRadius: BorderRadius.circular(16),
-      color: Colors.white,
-      child: ListTile(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: Text(title),
-        subtitle: Text(subtitle),
-        onTap: () => _navigateToEntry(context, entry),
-        trailing: const Icon(Icons.chevron_right),
-        leading: Semantics(
-          label: 'Workout entry: $title, last updated on $subtitle',
-          excludeSemantics: true,
-          child: const Icon(Icons.fitness_center),
+    child: Semantics(
+      label: 'View workout entry: $title, last updated on $subtitle',
+      button: true,
+      child: Material(
+        elevation: 2,
+        borderRadius: BorderRadius.circular(16),
+        color: Colors.white,
+        child: ListTile(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          title: Text(title),
+          subtitle: Text(subtitle),
+          onTap: () => _navigateToEntry(context, entry),
+          trailing: const Icon(Icons.chevron_right),
+          leading: const Icon(Icons.fitness_center),
         ),
       ),
     ),
   );
 }
+
 
 
   Future<void> _navigateToEntry(BuildContext context, JournalEntry entry) async {

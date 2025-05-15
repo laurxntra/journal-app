@@ -62,6 +62,7 @@ class MainApp extends StatelessWidget {
       builder: (context, child) {
         return Semantics(
           label: 'Workout Journal',
+          excludeSemantics: true,
           child: child!,
         );
       },

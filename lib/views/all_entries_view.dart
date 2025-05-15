@@ -18,6 +18,7 @@ class AllEntriesView extends StatelessWidget {
         actions: [
           Semantics(
             label: 'Add a new workout entry',
+            excludeSemantics: true,
             child: IconButton(
               icon: const Icon(Icons.add),
               onPressed: () => _navigateToEntry(context, JournalEntry.empty()),
@@ -45,6 +46,7 @@ class AllEntriesView extends StatelessWidget {
       ),
       floatingActionButton: Semantics(
         label: 'Add a new workout entry',
+        excludeSemantics: true,
         child: FloatingActionButton(
           onPressed: () => _navigateToEntry(context, JournalEntry.empty()),
           child: const Icon(Icons.add),
@@ -73,7 +75,9 @@ class AllEntriesView extends StatelessWidget {
           ],
         ),
         child: Semantics(
-          label: 'Workout Entry: ${entry.title.isNotEmpty ? entry.title : 'Untitled Entry'}, Last updated on ${_formatDateTime(entry.updatedAt)}',
+          label: 'Workout Entry: ${entry.title.isNotEmpty ? entry.title 
+            : 'Untitled Entry'}, Last updated on ${_formatDateTime(entry.updatedAt)}',
+            excludeSemantics: true,
           button: true,
           child: ListTile(
             title: Text(entry.title.isNotEmpty ? entry.title : 'Untitled Entry'),

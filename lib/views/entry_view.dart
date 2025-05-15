@@ -55,6 +55,7 @@ class _EntryViewState extends State<EntryView> {
               // Title of the workout 
               Semantics(
                 label: 'Workout Title', 
+                excludeSemantics: true,
                 child: TextFormField(
                   initialValue: currentTitle,
                   onChanged: (newTitle) => setState(() => currentTitle = newTitle),
@@ -76,6 +77,7 @@ class _EntryViewState extends State<EntryView> {
               // Workout name text field
               Semantics(
                 label: 'Workout Name',
+                excludeSemantics: true,
                 child: TextFormField(
                   initialValue: currentText,
                   onChanged: (newText) => setState(() => currentText = newText),
@@ -97,6 +99,7 @@ class _EntryViewState extends State<EntryView> {
               // Number of sets field
               Semantics(
                 label: 'Amount of sets', 
+                excludeSemantics: true,
                 child: TextFormField(
                   initialValue: currentSets.toString(),
                   keyboardType: TextInputType.number,
@@ -117,7 +120,8 @@ class _EntryViewState extends State<EntryView> {
             
               // Number of reps field
               Semantics(
-                label: 'Amount of repetitions', 
+                label: 'Amount of repetitions',
+                excludeSemantics: true, 
                 child: TextFormField(
                   initialValue: currentReps.toString(),
                   keyboardType: TextInputType.number,
@@ -139,6 +143,7 @@ class _EntryViewState extends State<EntryView> {
               // Amount of weight
               Semantics(
                 label: 'Amount of weight',
+                excludeSemantics: true,
                 child: TextFormField(
                   initialValue: currentWeight.toString(),
                   keyboardType: TextInputType.number,
@@ -160,6 +165,7 @@ class _EntryViewState extends State<EntryView> {
               // Duration of workout
               Semantics(
                 label: 'Duration of workout (in minutes)',
+                excludeSemantics: true,
                 child: TextFormField(
                   initialValue: currentDura.toString(),
                   keyboardType: TextInputType.number,
@@ -181,6 +187,7 @@ class _EntryViewState extends State<EntryView> {
               // Save button
               Semantics(
                 label: 'Save Workout Entry',
+                excludeSemantics: true,
                 button: true,
                 child: ElevatedButton(
                   onPressed: () => _popBack(context),

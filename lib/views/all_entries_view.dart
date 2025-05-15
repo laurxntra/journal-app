@@ -24,6 +24,7 @@ Widget build(BuildContext context) {
           label: 'Add a new workout entry',
           excludeSemantics: true,
           child: IconButton(
+            key: const Key('add_entry_button'),
             icon: const Icon(Icons.add),
             onPressed: () => _navigateToEntry(context, JournalEntry.empty()),
           ),

@@ -31,30 +31,28 @@ class _EntryViewState extends State<EntryView> {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
-      onPopInvokedWithResult: (didPop, result) {
-        if (!didPop) {
-          _popBack(context);
-        }
-      },
-      child: Scaffold(
-        resizeToAvoidBottomInset: true,
-        appBar: AppBar(
-          title: Semantics(
-            header: true,
-            child: Text(currentTitle.isNotEmpty ? currentTitle : ''),
-
-          )
+    return Scaffold(
+      appBar: AppBar(
+        title: Semantics(
+          header: true,
+          child: Text(currentTitle.isNotEmpty ? currentTitle : ''),
         ),
-        body: SingleChildScrollView(
+      ),
+      body: PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (didPop, result) {
+          if (!didPop) {
+            _popBack(context);
+          }
+        },
+        child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Title of the workout 
+              // Workout Title
               Semantics(
-                label: 'Workout Title', 
+                label: 'Workout Title',
                 excludeSemantics: true,
                 child: TextFormField(
                   initialValue: currentTitle,
@@ -64,7 +62,6 @@ class _EntryViewState extends State<EntryView> {
                     hintText: 'e.g. Leg Day',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: Colors.blue)
                     ),
                     filled: true,
                     fillColor: Colors.white,
@@ -72,9 +69,9 @@ class _EntryViewState extends State<EntryView> {
                   ),
                 ),
               ),
-              const SizedBox(height: 16,),
+              const SizedBox(height: 16),
 
-              // Workout name text field
+              // Workout Name
               Semantics(
                 label: 'Workout Name',
                 excludeSemantics: true,
@@ -84,7 +81,6 @@ class _EntryViewState extends State<EntryView> {
                   decoration: InputDecoration(
                     labelText: 'Workout Name',
                     hintText: 'e.g. Leg Press',
-                    floatingLabelBehavior: FloatingLabelBehavior.auto,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -94,11 +90,11 @@ class _EntryViewState extends State<EntryView> {
                   ),
                 ),
               ),
-              const SizedBox(height: 16,),
-            
-              // Number of sets field
+              const SizedBox(height: 16),
+
+              // Sets
               Semantics(
-                label: 'Amount of sets', 
+                label: 'Amount of sets',
                 excludeSemantics: true,
                 child: TextFormField(
                   initialValue: currentSets.toString(),
@@ -116,12 +112,12 @@ class _EntryViewState extends State<EntryView> {
                   ),
                 ),
               ),
-              const SizedBox(height: 16,),
-            
-              // Number of reps field
+              const SizedBox(height: 16),
+
+              // Reps
               Semantics(
                 label: 'Amount of repetitions',
-                excludeSemantics: true, 
+                excludeSemantics: true,
                 child: TextFormField(
                   initialValue: currentReps.toString(),
                   keyboardType: TextInputType.number,
@@ -138,9 +134,9 @@ class _EntryViewState extends State<EntryView> {
                   ),
                 ),
               ),
-              const SizedBox(height: 16,),
-            
-              // Amount of weight
+              const SizedBox(height: 16),
+
+              // Weight
               Semantics(
                 label: 'Amount of weight',
                 excludeSemantics: true,
@@ -160,9 +156,9 @@ class _EntryViewState extends State<EntryView> {
                   ),
                 ),
               ),
-              const SizedBox(height: 16,),
+              const SizedBox(height: 16),
 
-              // Duration of workout
+              // Duration
               Semantics(
                 label: 'Duration of workout (in minutes)',
                 excludeSemantics: true,
@@ -182,9 +178,9 @@ class _EntryViewState extends State<EntryView> {
                   ),
                 ),
               ),
-              const SizedBox(height: 16,),
-            
-              // Save button
+              const SizedBox(height: 16),
+
+              // Save Button
               Semantics(
                 label: 'Save Workout Entry',
                 excludeSemantics: true,
@@ -204,7 +200,7 @@ class _EntryViewState extends State<EntryView> {
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                    )
+                    ),
                   ),
                 ),
               )
@@ -215,7 +211,7 @@ class _EntryViewState extends State<EntryView> {
     );
   }
 
-  void _popBack(BuildContext context){
+  void _popBack(BuildContext context) {
     final updatedEntry = JournalEntry(
       text: currentText,
       title: currentTitle,

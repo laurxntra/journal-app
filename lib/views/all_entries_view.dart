@@ -8,8 +8,7 @@ import 'package:provider/provider.dart';
 class AllEntriesView extends StatelessWidget {
   const AllEntriesView({super.key});
 
-  @override
-  @override
+@override
 Widget build(BuildContext context) {
   final journalProvider = Provider.of<JournalProvider>(context);
   final entries = journalProvider.entries;
@@ -49,7 +48,7 @@ Widget build(BuildContext context) {
 }
 
 
-Widget _createListElementForEntry(BuildContext context, JournalEntry entry) {
+  Widget _createListElementForEntry(BuildContext context, JournalEntry entry) {
   final title = entry.title.isNotEmpty ? entry.title : 'Untitled Entry';
   final subtitle = _formatDateTime(entry.updatedAt);
 

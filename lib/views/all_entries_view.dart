@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:journal/views/entry_view.dart';
 import 'package:journal/models/journal_entry.dart';

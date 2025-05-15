@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:journal/models/journal.dart';
 import 'package:journal/models/journal_entry.dart';
@@ -15,7 +16,7 @@ class JournalProvider extends ChangeNotifier {
   JournalProvider._(this._journal);
 
   /// Factory constructor to create a JournalProvider instance
-  ///
+  /// 
   /// Parameters:
   /// - isar: The Isar database passed in for journal storage
   factory JournalProvider(Isar isar) {
@@ -28,7 +29,7 @@ class JournalProvider extends ChangeNotifier {
   // Returns:
   // - A unmodifiable list to prevent accidental edits
   List<JournalEntry> get entries => List.unmodifiable(_journal.entries);
-
+  
   // Returns: a cloned copy of the current journal
   Journal get journal => _journal.clone();
 
@@ -52,7 +53,7 @@ class JournalProvider extends ChangeNotifier {
 
   /// Adds or updates a journal entry and reloads the list
   ///
-  /// Parameters:
+  /// Parameters: 
   /// - entry: The JournalEntry to be saved or updated
   Future<void> upsertJournalEntry(JournalEntry entry) async {
     // Save/update in the database

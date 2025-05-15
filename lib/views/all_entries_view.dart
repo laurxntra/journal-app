@@ -87,17 +87,17 @@ Widget _createListElementForEntry(BuildContext context, JournalEntry entry) {
 
 
   Future<void> _navigateToEntry(BuildContext context, JournalEntry entry) async {
-    final newEntry = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => EntryView(entry: entry)),
-    );
+  final JournalEntry? newEntry = await Navigator.push<JournalEntry>(
+    context,
+    MaterialPageRoute(builder: (context) => EntryView(entry: entry)),
+  );
 
-    // Ensure the newEntry is not null before attempting to upsert it
-    if (newEntry != null) {
-      final journalProvider = Provider.of<JournalProvider>(context, listen: false);
-      await journalProvider.upsertJournalEntry(newEntry);
-    }
+  if (newEntry != null) {
+    final journalProvider = Provider.of<JournalProvider>(context, listen: false);
+    await journalProvider.upsertJournalEntry(newEntry);
   }
+}
+
 
   String _formatDateTime(DateTime when) {
     return DateFormat.yMd().add_jm().format(when);

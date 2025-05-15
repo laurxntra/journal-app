@@ -32,8 +32,17 @@ class JournalEntry {
   int weight;
 
 
-  // Factory constructor to create a new journal entry with default values. Automatically
-  // assigns a unique id and sets time stamps
+  // Factory constructor that creates a new journal entry with default values
+  // Parameters:
+  // - text: name of exercise
+  // - title: Title of the workout entry
+  // - sets: number of sets
+  // - reps: number of repetitions
+  // - duration: Duration in minutes
+  // - weight: weight in pounds
+  //
+  // Returns:
+  // - A JournalEntry with all the fields initalized 
   factory JournalEntry.fromText({
       String text = '',
       String title = '',
@@ -54,7 +63,18 @@ class JournalEntry {
         createdAt: now);
   }
 
-  // Constructor for creating a journal entry with specific values
+  // Main constructor for creating a journal entry
+  //
+  // Parameters:
+  // - text: name of exercise
+  // - id: id, this is used when loaded from Isar
+  // - createdAt: Timestamp when the entry was created
+  // - updatedAt: Timestamp of last update
+  // - title: title of the workout entry
+  // - sets: number of sets
+  // - reps: number of repetitions
+  // - duration: amount of time in minutes
+  // - weight: amount of weight
   JournalEntry({
       this.text = 'Untitled Workout',
       this.id,
@@ -67,7 +87,9 @@ class JournalEntry {
       this.weight = 0
   });
 
-  // Factory constructor for an empty journal entry
+  // Factory constructor to create  a completely empty journal entry
+  // 
+  // Returns: A JournalEntry with default values and current timestamps
   factory JournalEntry.empty() {
     final now = DateTime.now();
     return JournalEntry(
@@ -82,8 +104,13 @@ class JournalEntry {
     );
   }
 
-  // Constructor to create a new entry from an existing one with an updated text
-  // Keeps the original entry's Id and timestamp but updates the modified time
+  // Constructor that creates a new journal entry from an existing one
+  //
+  // Parameters:
+  // - entry: the original journal entry to copy from
+  // - newText: the new exercise text
+  //
+  // Returns: A modified JournalEntry with updated text and timestamp
   JournalEntry.withUpdatedText(JournalEntry entry, String newText)
       : id = entry.id,
         createdAt = entry.createdAt,

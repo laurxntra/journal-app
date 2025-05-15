@@ -62,6 +62,9 @@ I had a lot of issues with my XCode from AS5 and currently.. these websites help
 - https://www.figma.com/resource-library/color-combinations/
 - https://mypersonaltrainerwebsite.com/blog/how-to-use-color-psychology-to-create-the-perfect-fitness-website
 - https://dart.dev/language/functions
+- https://stackoverflow.com/questions/60222500/how-to-return-bool-value-with-navigator-pop
+- https://stackoverflow.com/questions/77357118/getting-the-other-values-in-a-record-if-given-the-id-in-isar-database-using-flut
+- 
 
 
 
@@ -75,17 +78,42 @@ Describe the purpose of your app.
 * How do you want to make this aesthetically pleasing and easy to use? 
 * What inclusive design principles did you focus on in your design? 
 * What data will be stored in this app? 
+- Purpose: 
+  - Workout tracker
 
-Answer here: (delete this prompt)
+- Targeted users: 
+  - People who enjoy fitness --> Want simple ways to track workouts
+  - Beginners --> people who want an easy, beginner friendly logging system
+  - Me --> I would love to create my own fitness tracker journey (have it be my own!!)
+
+- Functionality:
+  - The workout journal tracker should allow users to log different types of workouts by recording the title of the exercise day, exercise name, sets, reps, duration (for cardio), and weights used. It should also allow users to add notes for details (was not implemented in my app). Users should also be able to view, edit, and add entries easily
+
+- Aesthetics:
+  - I wanted the app to mainly be simple and easy to use with minimal color schemes that also helped motivates users (I referenced online what color schemes would go along with workouts). 
+
+- Inclusive Design Principles:
+  - I wanted to make sure that there will be semantics labeling for those that rely on VoiceOver while using the app, also making sure that the color scheme used is easy for those that may have some sort of vision impairments.
+
+- Data Design: 
+  - String exerciseName --> name of exercise
+  - int sets --> number of sets done
+  - int reps --> number of repetitions done
+  - int duration --> how long (for runners)
+  - String notes --> Additional notes (did not implement in app)
+  - DateTime createAt --> time when entry was created
+  - DateTime editedAt --> time when entry was edited
+  - int weight --> number of weight added 
+
 
 Where in your repo can we find the design sketches that you made?
+- Folder named "prototype" will have my sketches in there
 
 Answer here: (delete this prompt)
 
 What was different in your final product from your original vision and sketches? If you were able to fully complete the app you designed, please list 1-2 things you would like to change in your app or add to your app if you had more time? 
-
-Answer here: (delete this prompt)
-
+- One thing that was different from my original vision compared to my final product was adding the notes feature. I did not have time to implement this.
+- I would definitely add the notes section that intended on planning if I had more time as well as maybe a search/filter at the top of the page to allow users to filter through their workouts based off the type of "day" they wrote down
 
 ## Metadata
 
@@ -147,16 +175,18 @@ What could you do to change the design and implementation of your app to mitigat
 
 ### Learning process
 What new tools, techniques, or other skills did you learn while doing this assignment? 
+- Some new tools I learned while using this is practicing how to use Navigator.push to help navigate to a new screen and wait until that screen pops up.
+- I also practiced working with Isar more, practicing more on adding, updating, and reading data using Isar's methods
+
 
 What part of this assignment challenged you the most? How did you overcome those challenges? 
-
-Answer here: (delete this prompt)
+- The most challenging part of this assignment was honestly, handling navigation where I needed to pass data back from one screen to the previous screen and have the app update the app's state. I was struggling on making sure the data would return after navigating back.
+- I overcame this by learning how to await the result from a Navigator.push and capturing the provider before the async call so it could update the data safely. Adding keys to the widgets also helped with testing the interaction!
 
 ### Self-Assessement
 
 If you were to give yourself a grade for this assignment from 0 to 150, what would it be? Explain why.
-
-Answer here: (delete this prompt)
+- I would probably give myself roughly around 120 for this assignment. I was able to implement many of the core functionality. However, there were a lot of challenges I faced and testing out the interactions, also the app itself is not the best looking and definitely could look a lot better
 
 
 ### Stretch goals
@@ -164,14 +194,13 @@ Tell us about what stretch goal/optional challenge you did, what you learned fro
 
 If you did not do an optional stretch goal, please say what you would have done if you had the extra time, and why that option was appealing to you. 
 
-Answer here: (delete this prompt)
+- I did not complete an optional stretch goal. What I would do if I had more time is definitely implement the delete an entry functionality. This option is most appealing to me because while testing I accumulated A LOTTTT of entries either by accident or just purely testing and it makes the app look a lot more messier in my opinion. I do think it is a good feature to have though, to be able to delete an entry.
 
 ### Meta
 
 How much time (in minutes or hours of active work) did you spend working on this assignment? What parts took the longest?
 - I would say roughly 48-36 hours (on and off). It took roughly 3-4 days, but I did not really count the hours, worked on the assignment.
 - I want to say what took the longest was making the aesthetic exactly what I wanted. A lot of trial and error occurred as to how I wanted the app to look like. (A lot of debugging had to happen with my xcode too so that took forever).
-
 
 How could the assignment be improved for future offerings of this class?
 - I think this was a well structured assignment, so I can not really think of any improvements that this one needs

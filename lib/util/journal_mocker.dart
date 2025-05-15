@@ -1,6 +1,9 @@
 // import 'package:journal/models/journal.dart';
 // import 'package:journal/models/journal_entry.dart';
 
+// // Creates and returns a mock journal instance for testing
+// //
+// // Returns: A Journal with sample entries that were pre-made
 // Journal makeMockJournal() {
 //   return Journal(
 //     name: 'Work and Jot',

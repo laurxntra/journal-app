@@ -70,14 +70,6 @@ class MainApp extends StatelessWidget {
       // Main screen displaying all journal entries
       home: const AllEntriesView(),
 
-      // Semantic labels to the entire app for accessibility
-      builder: (context, child) {
-        return Semantics(
-          label: 'Workout Journal',
-          excludeSemantics: true,
-          child: child!,
-        );
-      },
     );
   }
 }

@@ -5,12 +5,13 @@ import 'package:intl/intl.dart';
 import 'package:journal/providers/journal_provider.dart';
 import 'package:provider/provider.dart';
 
+// Displays the list of all workout journal entries
 class AllEntriesView extends StatelessWidget {
   const AllEntriesView({super.key});
 
-
 @override
 Widget build(BuildContext context) {
+  // Accesses the JournalProviderr to retrieve saved entries
   final journalProvider = Provider.of<JournalProvider>(context);
   final entries = journalProvider.entries;
 
@@ -30,9 +31,11 @@ Widget build(BuildContext context) {
         ),
       ],
     ),
+    // List of all entries/empty messages
     body: ListView.builder(
       itemCount: entries.isEmpty ? 1 : entries.length,
       itemBuilder: (context, index) {
+        // If the entries are empty, show "No work out entries yet"
         if (entries.isEmpty) {
           return const Center(
             child: Padding(
@@ -40,30 +43,33 @@ Widget build(BuildContext context) {
               child: Text('No workout entries yet.'),
             ),
           );
+        // Otherwise fill them with the list tile for each entry
         } else {
           return _createListElementForEntry(context, entries[index]);
         }
       },
     ),
-    floatingActionButton: Opacity(
-      opacity: 0.0,
-      child: IgnorePointer(
-        child: Semantics(
-          label: 'Add a new workout entry',
-          excludeSemantics: true,
-          child: FloatingActionButton(
-            onPressed: () => _navigateToEntry(context, JournalEntry.empty()),
-            child: const Icon(Icons.add),
-          ),
-        ),
-      )
-    )
+    // FAB to create a new workout entry
+    floatingActionButton: Semantics(
+      label: 'Add a new workout entry',
+      excludeSemantics: true,
+      child: FloatingActionButton(
+        onPressed: () => _navigateToEntry(context, JournalEntry.empty()),
+        child: const Icon(Icons.add),
+      ),
+    ),
   );
 }
 
-
-
+// Creates a card list for a journal entry
+// 
+// Parameters:
+// - context: build context for navigation
+// - entry: The JournalEntry to display
+//
+// Returns: A widget representing one entry
 Widget _createListElementForEntry(BuildContext context, JournalEntry entry) {
+  // Show 'Untitled Entry' if there is no title present
   final title = entry.title.isNotEmpty ? entry.title : 'Untitled Entry';
   final subtitle = _formatDateTime(entry.updatedAt);
 
@@ -80,7 +86,6 @@ Widget _createListElementForEntry(BuildContext context, JournalEntry entry) {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           title: Text(title),
           subtitle: Text(subtitle),
-          key: Key('entry_file_${entry.id}'),
           onTap: () => _navigateToEntry(context, entry),
           trailing: const Icon(Icons.chevron_right),
           leading: const Icon(Icons.fitness_center),
@@ -90,8 +95,9 @@ Widget _createListElementForEntry(BuildContext context, JournalEntry entry) {
   );
 }
 
-
-
+// Navigates to the EntryView screen for editing/creating an entry
+//
+// Returns an
 Future<void> _navigateToEntry(BuildContext context, JournalEntry entry) async {
   final journalProvider = Provider.of<JournalProvider>(context, listen: false);
 

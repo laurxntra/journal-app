@@ -19,16 +19,7 @@ Widget build(BuildContext context) {
       title: Semantics(
         child: const Text('All Workout Entries'),
       ),
-      actions: [
-        Semantics(
-          label: 'Add a new workout entry',
-          excludeSemantics: true,
-          child: IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () => _navigateToEntry(context, JournalEntry.empty()),
-          ),
-        ),
-      ],
+      
     ),
     body: ListView.builder(
       itemCount: entries.isEmpty ? 1 : entries.length,

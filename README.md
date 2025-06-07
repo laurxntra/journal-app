@@ -25,45 +25,6 @@
 - Accessibility widgets
 
 ## Project Structure
-# 🏋️ Workout Journal
-
-**Workout Journal** is a Flutter app that helps users log and review their workouts. It supports creating detailed entries, tracking past sessions, and maintaining personal fitness notes — all stored locally. Built with a custom blue-themed UI and accessible design.
-
-## 🌟 Features
-
-- ➕ Add workout entries with:
-  - Date & time
-  - Workout type
-  - Duration
-  - Optional notes
-- 📖 View your workout history
-- ✏️ Edit and delete previous logs
-- 💾 Local data persistence using Isar
-- 🎨 Clean, themed UI with custom blue palette
-- ♿ Accessibility-friendly (semantic labels, large touch targets, WCAG contrast)
-
-## 🎨 Color Palette
-
-- `#011f4b` (Dark Blue)
-- `#03396c`
-- `#005b96`
-- `#6497b1`
-- `#b3cde0` (Light Blue)
-
-## 📸 Screenshots
-
-<img src="assets/screenshots/workout_list.png" alt="Workout List Screen" width="300" />
-<img src="assets/screenshots/add_workout.png" alt="Add Workout Screen" width="300" />
-
-## 🛠️ Technologies Used
-
-- **Flutter & Dart**
-- **Isar** for fast local storage
-- `provider` for state management
-- `intl` for date/time formatting
-- Accessibility widgets (e.g., `Semantics`, screen reader testing)
-
-## 📂 Project Structure
 
 ```text
 lib/

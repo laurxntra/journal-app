@@ -1,88 +1,125 @@
-// Represents a single journey entry with a unique id, text, and time stamps
+import 'package:isar/isar.dart';
+part 'journal_entry.g.dart';
+
+@Collection()
+// Represents a single journal entry with a unique id, text, and time stamps
+// This class uses Isar database with an optional unique id
 class JournalEntry {
-  // Unique id for the journal entry
-  final int id;
+  // Unique id for the journal entry (managed by Isar)
+  Id? id;
 
   // Text for the content of the journal entry (exercise name)
-  final String workoutName;
+  late String text;
 
   // Timestamp that indicates when the last entry was edited
-  final DateTime updatedAt;
+  late DateTime updatedAt;
 
   // Timestamp that indicates when the entry was first made
-  final DateTime createdAt;
+  late DateTime createdAt;
 
   // Title for the journal entry
-  final String title;
+  late String title;
 
   // Number of sets performed in the workout session
-  final int sets;
+  int sets;
 
-  // Number of repetitions per set 
-  final int reps;
+  // Number of repetitions per set
+  int reps;
 
   // Duration of the workout in minutes (for runners)
-  final int duration;
+  int duration;
 
   // Amount of weight used in lbs
-  final int weight;
+  int weight;
 
-  // Factory constructor to create a new journal entry with default values. Automatically
-  // assigns a unique id and set time stamps
+
+  /// Factory constructor that creates a new journal entry with default values
+  /// Parameters:
+  /// - text: name of exercise
+  /// - title: Title of the workout entry
+  /// - sets: number of sets
+  /// - reps: number of repetitions
+  /// - duration: Duration in minutes
+  /// - weight: weight in pounds
+  ///
+  /// Returns:
+  /// - A JournalEntry with all the fields initalized 
   factory JournalEntry.fromText({
-      String workoutName = '',
+      String text = '',
       String title = '',
       int sets = 0,
       int reps = 0,
       int duration = 0,
       int weight = 0,
     }) {
-    final when = DateTime.now();
+    final now = DateTime.now();
     return JournalEntry(
-        workoutName: workoutName,
+        text: text,
         title: title,
         sets: sets,
         reps: reps,
         duration: duration,
         weight: weight,
-        id: SequentialIDMaker.nextID(),
-        updatedAt: when,
-        createdAt: when);
+        updatedAt: now,
+        createdAt: now);
   }
 
-  // Constructor for creating a journal entry with specific values
-  JournalEntry(
-      {required this.workoutName,
-      required this.id,
+  /// Main constructor for creating a journal entry
+  ///
+  /// Parameters:
+  /// - text: name of exercise
+  /// - id: id, this is used when loaded from Isar
+  /// - createdAt: Timestamp when the entry was created
+  /// - updatedAt: Timestamp of last update
+  /// - title: title of the workout entry
+  /// - sets: number of sets
+  /// - reps: number of repetitions
+  /// - duration: amount of time in minutes
+  /// - weight: amount of weight
+  JournalEntry({
+      this.text = 'Untitled Workout',
+      this.id,
       required this.updatedAt,
       required this.createdAt,
-      required this.title,
+      this.title = 'Untitled Entry',
       this.sets = 0,
       this.reps = 0,
       this.duration = 0,
-      this.weight = 0});
+      this.weight = 0
+  });
 
+  /// Factory constructor to create  a completely empty journal entry
+  /// 
+  /// Returns: 
+  /// - A JournalEntry with default values and current timestamps
   factory JournalEntry.empty() {
+    // Set timestamps to current time when creating a new entry
+    final now = DateTime.now(); 
     return JournalEntry(
-      workoutName: '',
+      text: 'Untitled Workout',
       title: 'Untitled Entry',
       sets: 0,
       reps: 0,
       duration: 0,
       weight: 0,
-      id: SequentialIDMaker.nextID(),
-      updatedAt: DateTime.now(),
-      createdAt: DateTime.now(),
+      updatedAt: now,
+      createdAt: now,
     );
   }
 
-  // Constructor to create a new entry from an existing one with an updated text
-  // Keeps the original entry's Id and timestamp but updates the modified time
-  JournalEntry.withUpdatedText(JournalEntry entry, newText)
+  /// Constructor that creates a new journal entry from an existing one
+  ///
+  /// Parameters:
+  /// - entry: the original journal entry to copy from
+  /// - newText: the new exercise text
+  ///
+  /// Returns: 
+  /// - A modified JournalEntry with updated text and timestamp
+  JournalEntry.withUpdatedText(JournalEntry entry, String newText)
       : id = entry.id,
         createdAt = entry.createdAt,
         updatedAt = DateTime.now(),
-        workoutName = entry.workoutName,
+        text = newText,
         title = entry.title,
         sets = entry.sets,
         reps = entry.reps,
@@ -90,12 +127,3 @@ class JournalEntry {
         weight = entry.weight;
 }
 
-// Generates the unique id for the journal entries, increases the number
-// so there is a new unique id for the next entry
-class SequentialIDMaker {
-  static int _lastID = 0;
-  static int nextID() {
-    _lastID += 1;
-    return _lastID;
-  }
-}

@@ -36,10 +36,10 @@ lib/
 │   └── journal_mocker.dart
 ├── providers/
 │   └── journal_provider.dart
-├── models/
-│   ├── journal_entry.dart
-│   ├── journal_entry.g.dart
-│   └── journal.dart
+└── models/
+    ├── journal_entry.dart
+    ├── journal_entry.g.dart
+    └── journal.dart
 
 ```
 

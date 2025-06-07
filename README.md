@@ -15,7 +15,7 @@
 - Accessibility-friendly followed by WCAG guidelines
 
 ## Screenshots
-TODO
+<img src="assets/home.PNG" alt="Workout Journal Home" width="300" /> <img src="assets/entry.PNG" alt="Workout Journal Entry" width="300" /> <img src="assets/update.PNG" alt="Workout Journal Updated Home" width="300" />
 
 ## Technologies Used
 - Flutter & Dart
@@ -30,7 +30,7 @@ TODO
 ## To get started
 1. **Clone the repo**
    ```bash
-   git clone TODO
+   git clone https://github.com/laurxntra/journal-app.git
    cd journal-app
 2. **Install dependencies**
    ```bash
